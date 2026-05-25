@@ -120,6 +120,20 @@ Worked example: **create namespace `acme-eu`** (EU data residency). Four standal
 
 **Entry point:** Admin screen `57:56` received an additive primary `New namespace` button (`brand/tide` fill, white label, radius 8, ~36px height) inserted between Search and Avatar in the Topbar, at node **`160:2`**. The button was not present before this task; no regression to existing topbar elements.
 
+### Knowledge source — drawer flow ✅
+
+Worked example: **add `acme-helpcenter` web crawl** (ties to the `kb_lookup` story thread). Five standalone snapshots, each a **clone of the KB Management screen (`68:56`)** dimmed by a full-frame `text/ink` scrim at 40% opacity, with a right-side **Drawer** (560 wide, 1024 tall) anchored full-height at x=880. Band label **"Knowledge source"** (Display/L, `text/ink`, node `182:64`) sits above frame 1 at y=3600. Laid out at x = i×1540, y = 3720. Drawer title across all frames: "Add knowledge source". Each drawer has a hand-built 5-step compact stepper (`① Source ② Configure ③ Test ④ Ingest ⑤ Done`) advanced to the right step. All stepper chip colors and connector bars bind Paper & Signal variables by name (`brand/tide` for done/active chips and bars, `border/hairline` for upcoming — no bare hex literals). Drawer applies `DROP_SHADOW` overlay effect; fills/text bind variables by name (URLs, chunking config, counts use JetBrains Mono).
+
+| Frame # | Step | Node ID |
+|---|---|---|
+| 1 | Choose source — 2-col grid of 6 Connector cards: Web crawl (SELECTED), S3, Google Drive, Notion, Upload, API · Cancel / Continue → | `176:64` |
+| 2 | Configure — Fields: Start URL `https://help.acme.com` (Mono/M) · Target collection `acme` (select) · Chunking `recursive · 800 tok · 80 overlap` (Mono/S) · Embedding model `text-embedding-3-large` (select) · Sync schedule `daily 02:00 UTC` (select) · Back / Continue → | `178:64` |
+| 3 | Test / preview — Result chip `success` "Reached help.acme.com — 1,204 pages discovered" · 3 sample doc rows (title + Mono/S URL) · Back / Start ingestion → | `179:64` |
+| 4 | Ingestion running — 4 Progress-step rows: Fetch (done, `1,204 pages`) · Chunk (done, `9,841 chunks`) · Embed (active `state/running`, `6,002 / 9,841`) · Index (pending) · Running status chip "Embedding in progress · 61% complete" · Cancel | `180:64` |
+| 5 | Indexed ✓ — Success icon · "Indexed ✓" heading · Result chip `success` "Indexed 9,841 chunks · freshness just now" · Stats: 1,204 pages · 9,841 chunks · acme collection · Done (primary) | `181:64` |
+
+**Entry point:** KB Management screen `68:56` already carries the primary `Add source` button in the content header at node **`68:284`** (`brand/tide` fill, white label, placed next to the "Knowledge Base" page heading — NOT the global topbar). The button **pre-existed** from the original screen build; it was not duplicated (additive check satisfied).
+
 ## Cross-screen story threads (intentional coherence)
 - Open `kb_lookup` breaker (14 Health) → degradation banner (09 Chat) → `Error` source (16 KB).
 - `wf_run_8c3a2f` flows 07 Runs → 08 Run Detail → 13 Trace.
