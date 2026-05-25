@@ -1,0 +1,89 @@
+# 08 — Build Status & Handoff
+
+> **Snapshot: 2026-05-25.** The single source of truth for *what actually exists right now*, with the exact Figma IDs needed to resume. Track is **Figma-only, no code** (see [README](./README.md), [05](./05-build-workflow.md)). The plan docs (01–05) describe intent; this file records reality.
+
+## Figma file
+
+| | |
+|---|---|
+| **File** | "Conductor — Paper & Signal" |
+| **fileKey** | `wgCEx2MmeF3tGDeulGmVqI` |
+| **URL** | https://www.figma.com/design/wgCEx2MmeF3tGDeulGmVqI |
+| **Pages** | `Cover` (0:1) · `Foundations` (15:2) · `Components` (15:3) · `Screens` (23:2) |
+
+## Design system — DONE ✅ (Foundations page 15:2)
+
+- **82 variables** across 4 collections: `Primitives` (34, mode *Value*) · `Color` (32, mode *Light* — dark mode is a structured future add) · `Spacing` (10) · `Radius` (6). Naming: `surface/*`, `text/*`, `border/*`, `brand/tide*`, `state/*` (draft·staging·canary·production·running·error·paused), `provider/*`.
+- **13 text styles**: Display/XL, Display/L, Heading/H1, Heading/H2, Body/L, Body/M, Body/S, Strong/M, Label/M, Label/S, Mono/M, Mono/S, Mono/Medium.
+- **3 effect styles**: Shadow/Card, Shadow/Raised, Shadow/Overlay.
+- **Fonts**: Bricolage Grotesque (display) · Hanken Grotesk (body) · JetBrains Mono (machine layer).
+- **Idempotency note:** variables/styles are *name-based* (the sandbox has no `setSharedPluginData` on Variable/Style objects — see [06](./06-learnings.md) §14).
+
+## Components — DONE ✅ (Components page 15:3)
+
+Built as proper Figma **component sets with variants** (themed to Paper & Signal):
+
+| Component set | Node ID | Variants |
+|---|---|---|
+| **Version State Badge** | `20:23` | Draft · Staging · Canary · Production · Running · Failed · Paused |
+| **Provider Chip** | `21:14` | Claude · OpenAI · Gemini · Grok |
+
+Other composites (App Shell sidebar/topbar, agent card, workflow node, step-timeline row, chat bubble, etc.) are currently built **in-place within screens** to shadcn spec, not yet extracted into standalone component sets. Extracting them is a future enhancement (and the target for the shadcn-kit swap below).
+
+## Screens — 20 built ✅ (Screens page 23:2)
+
+Laid out left→right at x = index × 1540. One shared **acme-support** customer-support story runs through all of them.
+
+| # | Screen | Node ID | Nav (active) | Demonstrates |
+|---|---|---|---|---|
+| 01 | Agent Catalogue | `23:3` | Build › Agents | catalogue, version states, providers |
+| 02 | Agent Editor — Workflow | `35:34` | Build › Agents | visual node graph + DSL + inspector |
+| 03 | Validation | `41:36` | Build › Agents | collect-all errors (AD-13) |
+| 04 | Playground | `42:36` | Build › Playground | test run, routing, step trace |
+| 05 | Evaluation | `44:40` | Build › Evaluations | scorecards, A/B, LLM-as-judge (27) |
+| 06 | Version Promotion | `48:40` | Build › Agents | draft→staging→canary→prod + canary split (AD-29) |
+| 07 | Runs | `51:56` | Operate › Runs | run table, statuses |
+| 08 | Run Detail | `52:56` | Operate › Runs | step timeline + step-debug (AD-17) |
+| 09 | Chat | `54:56` | Engage › Chat | routing, background-task surfacing, citations, degradation, memory |
+| 10 | Tool & MCP Catalogue | `56:56` | Catalog › Tools & MCPs | tools + MCPs, auth (AD-11/18) |
+| 11 | Admin | `57:56` | Admin › Namespaces | tenancy, quotas, price table, vault |
+| 12 | Analytics | `59:56` | Insights › Analytics | volume, routing dist, cost vs budget, KB hit rate (30) |
+| 13 | Trace | `63:56` | Operate › Traces | OTel span waterfall + attributes (AD-24) |
+| 14 | Health | `65:56` | Operate › Health | circuit breakers (AD-31) — open `kb_lookup` ties to Chat degradation |
+| 15 | Scheduling | `67:56` | Catalog › Scheduling | cron / webhook / event triggers (29) |
+| 16 | KB Management | `68:56` | Catalog › Knowledge Base | sources, ingestion, retrieval bench (33) |
+| 17 | Marketplace | `71:56` | Catalog › Marketplace | shared catalogue, ratings, import (25/26) |
+| 18 | Compliance | `72:56` | Admin › Compliance | audit log, PII, consent, residency (35) |
+| 19 | Model Routing | `73:56` | Admin › Model routing | complexity cascade + cache (31) |
+| 20 | Memory Inspector | `74:56` | Operate › Memory | working / episodic / semantic tiers + injection trace (AD-30) |
+
+**Nav (final, consistent across all 20 sidebars):**
+`BUILD` Agents · Playground · Evaluations — `OPERATE` Runs · Traces · Health · Memory — `ENGAGE` Chat — `CATALOG` Tools & MCPs · Knowledge Base · Scheduling · Marketplace — `INSIGHTS` Analytics — `ADMIN` Namespaces · Compliance · Model routing · Settings. *(Settings has no standalone screen — folds into the Admin/Namespaces view.)*
+
+## Cross-screen story threads (intentional coherence)
+- Open `kb_lookup` breaker (14 Health) → degradation banner (09 Chat) → `Error` source (16 KB).
+- `wf_run_8c3a2f` flows 07 Runs → 08 Run Detail → 13 Trace.
+- usr_88213's duplicate-charge refund appears in 09 Chat, 18 Compliance (PII redaction), 20 Memory.
+
+## shadcn/ui-in-Figma — IN PROGRESS / BLOCKED ⛔
+
+Goal: import *real* shadcn components into Figma and retheme to Paper & Signal (full procedure in [07](./07-shadcn-in-figma.md)).
+
+- **Kit chosen:** Pietro Schirano "shadcn/ui Design System (Community)", duplicated by the user → **fileKey `B0cErNvwoThSCicLU3x0Fj`**.
+- **Blocker:** not yet **published as a team library** — `get_libraries` on Conductor shows it absent and `libraries_available_to_add` empty, so `importComponentByKeyAsync` can't reach it. The kit file must be in a **team project** (HSB) **and** explicitly **Published** (moving ≠ publishing).
+- **Caveat (important):** this kit is **style-based — 0 Figma variables** (uses Inter text styles + color styles + 877 icons). So even after publishing, a clean Tide/paper/Bricolage retheme is hard (per-component overrides). A **variable-based** kit (e.g. Bergmann "shadcn/ui components", `figma.com/community/file/1342715840824755935`) would retheme cleanly — recommended if fidelity-to-theme matters.
+- **Next action (user):** publish the kit (or a variable-based alternative) → paste the link → agent runs `get_libraries` → add → `search_design_system` → `importComponentByKeyAsync` → retheme → swap the in-place primitives for real components.
+
+## Open items / backlog
+- [ ] Publish a shadcn kit → import + retheme → swap primitives (blocked on user).
+- [ ] Extract in-place composites (App Shell, agent card, workflow node, chat bubble…) into standalone Figma component sets.
+- [ ] Optional: standalone **Settings** screen (currently folded into Admin).
+- [ ] Optional: **dark mode** (Color collection is structured for a second mode).
+- [ ] Commit `docs/ui/` to git (not yet committed this session).
+
+## How to resume (cold start)
+1. Read this file + [README](./README.md). Figma MCP is connected as Hugo Seabra (Pro).
+2. To edit screens: `use_figma` with `fileKey: wgCEx2MmeF3tGDeulGmVqI`; screens live on the **Screens** page (`23:2`) at the node IDs above.
+3. **New screen pattern:** clone an existing screen frame (`s = src.clone()`), set `x = 31×1540`+, retarget nav (deactivate `nav Agents`, activate the target `nav X`: fill `brand/tide-wash`, recolor icon vectors to `#0E7C86`, set its text to `brand/tide-text` + Hanken SemiBold), rebuild the `Breadcrumb` frame, remove the old `Content`, build the new body.
+4. **Gotchas (from [06](./06-learnings.md)):** use `figma.createAutoLayout()` (not `createFrame`+`layoutMode`, which stays 100×100); append children *before* setting `FILL`/`HUG`; never `resize()` after `FILL`; `setSharedPluginData` unavailable on variables/styles → use name lookups; `use_figma` writes are strictly sequential.
+5. Verify visually: `get_screenshot` on the screen node, download via `curl`, view.
