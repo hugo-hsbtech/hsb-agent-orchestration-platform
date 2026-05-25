@@ -93,6 +93,20 @@ Worked example: create top-level **chatbot `acme-concierge`** (router, draft `v0
 
 Steppers: chatbot frames show 1→7 of 7; the workflow tail shows the shorter 4-step path (Type · Identity · Model · Triggers, step 4 of 4). All text binds Paper & Signal styles by name; the machine register (IDs, slug, numbers, model name, router prompt) uses JetBrains Mono (Mono/M, Mono/S).
 
+### MCP creation — drawer flow ✅
+
+Worked example: **add the Linear MCP via OAuth**. Five standalone snapshots, each a **clone of the Tool & MCP Catalogue screen (`56:56`)** dimmed by a full-frame `text/ink` scrim at 40% opacity, with a right-side **Drawer shell** (Size=560, instanced from `87:14` then detached) anchored full-height. Band label **"MCP creation"** (Display/L, `text/ink`, node `128:56`) sits above frame 1. Laid out at x = i×1540, y = 1240. Drawer title across all frames: "Add MCP". Each drawer's stepper slot is rebuilt as a 5-step compact stepper (`① Connect ② Auth ③ Discover ④ Test ⑤ Register`) advanced to the right step. Drawer applies Shadow/Overlay; all fills/text bind Paper & Signal variables/styles by name (machine register — URLs, env keys, tool IDs, latency, name/version — uses JetBrains Mono).
+
+| Frame | Step | Node ID |
+|---|---|---|
+| 1 | Connect — Transport (SSE selected) · Server URL `https://mcp.linear.app/sse` · Env `LINEAR_WORKSPACE=acme` · Namespace `acme` · Cancel/Connect → | `128:57` |
+| 2 | Auth — OAuth handoff "Connect to Linear" · brand/tide Authorize · Result chip `pending` "Waiting for authorization…" · Back/Continue (disabled) | `142:56` |
+| 3 | Discover — Result chip `success` "Connected as acme" · checklists Tools (`create_issue`,`search_issues`,`add_comment`) / Resources (`issue://`,`team://`) / Prompts (`triage_issue`), all checked | `143:68` |
+| 4 | Test — sample call `search_issues({"query":"refund"})` in a `surface/sunken` well · Result chip `success` + latency `412ms` | `144:80` |
+| 5 | Register / Done — summary Name `linear` · Version `1.0` · Scope `acme` · Auth `state/production` Connected chip · primary Register MCP | `145:92` |
+
+**Entry point:** Tool & MCP Catalogue `56:56` already carries the primary `Add MCP` button in its content header (`brand/tide` fill at node **`56:284`**, label `56:288`) → launches this drawer flow. The button **pre-existed** from the screen build; it was *not* duplicated (additive check satisfied). The dimmed catalogue behind each frame keeps its existing cards (the Linear MCP card `56:369` is already present), so no new card is injected.
+
 ## Cross-screen story threads (intentional coherence)
 - Open `kb_lookup` breaker (14 Health) → degradation banner (09 Chat) → `Error` source (16 KB).
 - `wf_run_8c3a2f` flows 07 Runs → 08 Run Detail → 13 Trace.
