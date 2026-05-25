@@ -107,6 +107,19 @@ Worked example: **add the Linear MCP via OAuth**. Five standalone snapshots, eac
 
 **Entry point:** Tool & MCP Catalogue `56:56` already carries the primary `Add MCP` button in its content header (`brand/tide` fill at node **`56:284`**, label `56:288`) → launches this drawer flow. The button **pre-existed** from the screen build; it was *not* duplicated (additive check satisfied). The dimmed catalogue behind each frame keeps its existing cards (the Linear MCP card `56:369` is already present), so no new card is injected.
 
+### Namespace creation — drawer flow ✅
+
+Worked example: **create namespace `acme-eu`** (EU data residency). Four standalone snapshots, each a **clone of the Admin screen (`57:56`)** dimmed by a full-frame `text/ink` scrim at 40% opacity, with a right-side **Drawer** (560 wide, 1024 tall) anchored full-height at x=880. Band label **"Namespace creation"** (Display/L, `text/ink`, node `163:62`) sits above frame 1. Laid out at x = i×1540, y = 2480. Drawer title across all frames: "New namespace". Each drawer has a 4-step compact stepper (`① Identity ② Quotas ③ Defaults ④ Review`) advanced to the right step. Drawer applies `DROP_SHADOW` overlay effect; all fills/text bind Paper & Signal variables by name (slug/numeric caps use JetBrains Mono).
+
+| Frame # | Step | Node ID |
+|---|---|---|
+| 1 | Identity — Name `acme-eu` · Slug `acme-eu` (Mono/M) · Description "EU-resident tenant for acme support." · Region `eu-west-1 (Frankfurt)` · Cancel / Continue → | `162:62` |
+| 2 | Quotas & Budget — Monthly token cap `50M` (Mono) · Cost cap `$2,000` · Provider rate limit `60 req/min` (Mono) · Max agents `25` (Mono) · Back / Continue → | `163:63` |
+| 3 | Defaults — Default provider Chip `Claude` · Allowed providers multi-select (Claude ✓, OpenAI ✓, Gemini ☐, Grok ☐) · Safety defaults `Standard moderation` + `PII redaction on` · Back / Continue → | `164:62` |
+| 4 | Review & Create — NAMESPACE SUMMARY card with all 11 fields (label Label/S `text/muted`, value Body/M right-aligned; slug/caps/numeric in Mono) · Back / Create namespace | `165:64` |
+
+**Entry point:** Admin screen `57:56` received an additive primary `New namespace` button (`brand/tide` fill, white label, radius 8, ~36px height) inserted between Search and Avatar in the Topbar, at node **`160:2`**. The button was not present before this task; no regression to existing topbar elements.
+
 ## Cross-screen story threads (intentional coherence)
 - Open `kb_lookup` breaker (14 Health) → degradation banner (09 Chat) → `Error` source (16 KB).
 - `wf_run_8c3a2f` flows 07 Runs → 08 Run Detail → 13 Trace.
