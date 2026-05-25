@@ -70,6 +70,29 @@ Laid out left→right at x = index × 1540. One shared **acme-support** customer
 **Nav (final, consistent across all 20 sidebars):**
 `BUILD` Agents · Playground · Evaluations — `OPERATE` Runs · Traces · Health · Memory — `ENGAGE` Chat — `CATALOG` Tools & MCPs · Knowledge Base · Scheduling · Marketplace — `INSIGHTS` Analytics — `ADMIN` Namespaces · Compliance · Model routing · Settings. *(Settings has no standalone screen — folds into the Admin/Namespaces view.)*
 
+## Journeys — IN PROGRESS (Journeys page 82:2)
+
+Multi-step takeover/drawer flows that compose the reusable creation-flow primitives (Stepper, Takeover shell, Connector card, Result chip) over the same **acme** customer-support story. Laid out left→right at x = index × 1540, each frame 1440×1024. Band label **"Agent creation"** (Display/L, `text/ink`) sits above frame 1.
+
+### Agent creation — takeover wizard ✅
+
+Worked example: create top-level **chatbot `acme-concierge`** (router, draft `v0.1`) routing to the existing `payments` / `technical` / `knowledge` specialists. The 7-step chatbot spine plus one diverging workflow-tail frame. Each frame is a (detached) instance of the **Takeover shell** (`88:26`), flow name **New agent**, with its Takeover/Horizontal Stepper rebuilt to the right step count/position.
+
+| Frame | Step | Node ID |
+|---|---|---|
+| 1 | Type (Chatbot selected / Workflow) | `106:221` |
+| 2 | Identity (`acme-concierge`, ns `acme`, owner, tags) | `106:237` |
+| 3 | Model & Provider (Claude · `claude-opus-4-7` · temp 0.3 · 4096 · router prompt) | `106:253` |
+| 4 | Routing & Specialists (LLM classifier · 0.72 · payments/technical/knowledge Production) | `106:269` |
+| 5 | Knowledge & Memory (acme Qdrant KB · Working/Episodic 30d/Semantic) | `106:285` |
+| 6 | Safety (Standard moderation · PII redaction · blocked topics · refusal) | `106:301` |
+| 7 | Review & Create (two-col summary · Draft `v0.1` rail · Create as draft) | `106:317` |
+| 8 | Workflow tail — Triggers → Open builder (Manual selected; 4-step path) | `106:333` |
+
+**Entry point:** Agent Catalogue `23:3` carries the primary `New agent` button (`brand/tide` fill, white label bound to `text/on-brand`, right-aligned in the Catalogue Header toolbar) at node **`25:30`** → launches this wizard. The workflow tail's `Create draft & open builder` implies handoff to the existing Workflow editor (`35:34`).
+
+Steppers: chatbot frames show 1→7 of 7; the workflow tail shows the shorter 4-step path (Type · Identity · Model · Triggers, step 4 of 4). All text binds Paper & Signal styles by name; the machine register (IDs, slug, numbers, model name, router prompt) uses JetBrains Mono (Mono/M, Mono/S).
+
 ## Cross-screen story threads (intentional coherence)
 - Open `kb_lookup` breaker (14 Health) → degradation banner (09 Chat) → `Error` source (16 KB).
 - `wf_run_8c3a2f` flows 07 Runs → 08 Run Detail → 13 Trace.
