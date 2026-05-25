@@ -134,6 +134,20 @@ Worked example: **add `acme-helpcenter` web crawl** (ties to the `kb_lookup` sto
 
 **Entry point:** KB Management screen `68:56` already carries the primary `Add source` button in the content header at node **`68:284`** (`brand/tide` fill, white label, placed next to the "Knowledge Base" page heading — NOT the global topbar). The button **pre-existed** from the original screen build; it was not duplicated (additive check satisfied).
 
+### Trigger creation — drawer flow ✅
+
+Worked examples: nightly **`kb-refresh` cron** (Daily `0 2 * * *`) + **`ticket-created` webhook** (`https://api.acme.dev/hooks/tj_9f3a2c`) + **Linear `issue.created` event** alt. Five standalone snapshots, each a **clone of the Scheduling screen (`67:56`)** dimmed by a full-frame `text/ink` scrim at 40% opacity, with a right-side **Drawer** (560 wide, 1024 tall) anchored full-height at x=880. Band label **"Trigger creation"** (Bricolage SemiBold 24px, `text/ink`, node `187:64`) sits above frame 1 at y=4840. Laid out at x = i×1540, y = 4960. Drawer title across all frames: "New trigger". Each drawer has a hand-built 3-step compact stepper (`① Type ② Configure ③ Review`) advanced to the right step. Frames 2/3/5 all show step 2 active (three different Configure branches — Cron, Webhook, Event). Frame 4 shows step 3 active with steps 1–2 done. All stepper dot/bar colors bind Paper & Signal variables (`brand/tide` for done/active, `border/hairline` for upcoming — no bare hex). Drawer applies `DROP_SHADOW` overlay effect; cron expressions, endpoint URLs, signing secrets, topic names, and filter expressions use JetBrains Mono.
+
+| Frame # | Step / Branch | Node ID |
+|---|---|---|
+| 1 | Choose type — 3 Connector cards: Cron (SELECTED), Webhook, Event · Cancel / Continue → · Stepper step 1 | `187:65` |
+| 2 | Cron builder — Preset chips (Daily selected) · Expression `0 2 * * *` (Mono/M) · Preview `Next run: tomorrow 02:00 UTC` (Mono/S) · Timezone `UTC` · Target `kb-refresh` + `v3 Production` badge · Payload `{}` (Mono) · Back / Continue → · Stepper step 2 (done 1) | `188:64` |
+| 3 | Webhook — Endpoint `https://api.acme.dev/hooks/tj_9f3a2c` (Mono/M, Copy) · Secret `whsec_••••••••` (Mono/M) · Target `triage` · Payload mapping rows (Mono/S) · Back / Continue → · Stepper step 2 (done 1) | `189:64` |
+| 4 | Review & Activate — Summary card (Type Cron Daily · Schedule `0 2 * * *` · Target `kb-refresh` · v3 Production badge · Timezone UTC · Payload `{}`) · Enabled toggle ON · Retry `3× exponential backoff` · Activate trigger (primary) · Stepper step 3 (done 1–2) | `190:64` |
+| 5 | Event subscription — Source `linear` connector chip (amber) · Topic `issue.created` (Mono/S) · Filter `team == "support"` (Mono/S) · Target `triage` · Back / Continue → · Stepper step 2 (done 1, event branch) | `191:64` |
+
+**Entry point:** Scheduling screen `67:56` already carries the primary `New trigger` button in the content header at node **`67:284`** (`brand/tide` fill, white label `+ New trigger`, placed next to the "Scheduling & Triggers" page heading — NOT the global topbar). The button **pre-existed** from the original screen build; it was not duplicated (additive check satisfied).
+
 ## Cross-screen story threads (intentional coherence)
 - Open `kb_lookup` breaker (14 Health) → degradation banner (09 Chat) → `Error` source (16 KB).
 - `wf_run_8c3a2f` flows 07 Runs → 08 Run Detail → 13 Trace.
