@@ -9,7 +9,7 @@
 | **File** | "Conductor — Paper & Signal" |
 | **fileKey** | `wgCEx2MmeF3tGDeulGmVqI` |
 | **URL** | https://www.figma.com/design/wgCEx2MmeF3tGDeulGmVqI |
-| **Pages** | `Cover` (0:1) · `Foundations` (15:2) · `Components` (15:3) · `Screens` (23:2) |
+| **Pages** | `Cover` (0:1) · `Foundations` (15:2) · `Components` (15:3) · `Screens` (23:2) · `Journeys` (82:2) |
 
 ## Design system — DONE ✅ (Foundations page 15:2)
 
@@ -27,6 +27,16 @@ Built as proper Figma **component sets with variants** (themed to Paper & Signal
 |---|---|---|
 | **Version State Badge** | `20:23` | Draft · Staging · Canary · Production · Running · Failed · Paused |
 | **Provider Chip** | `21:14` | Claude · OpenAI · Gemini · Grok |
+| **Stepper** | `84:15` | Type=Takeover/Horizontal (`83:2`) · Type=Drawer/Compact (`84:2`) |
+| **Drawer shell** | `87:30` | Size=480 (`86:2`) · Size=560 (`87:14`) |
+| **Takeover shell** | `88:26` | single variant (1440×1024) |
+| **Result chip** | `89:46` | success (`89:37`) · error (`89:40`) · pending (`89:43`) |
+| **Connector card** | `91:49` | Selected=false (`91:37`) · Selected=true (`91:43`) |
+| **Progress-step row** | `92:48` | done (`92:37`) · active (`92:41`) · pending (`92:45`) |
+
+### Creation-flow component sets (Task 0 — Journeys foundation)
+
+The `Stepper`, `Drawer shell`, `Takeover shell`, `Result chip`, `Connector card`, and `Progress-step row` sets above are the reusable primitives the multi-step creation/onboarding journeys depend on (the new **`Journeys` page**, `82:2`). All bind Paper & Signal variables/styles by name (no hardcoded hexes); the machine register (counts) uses Mono/S, shells apply Shadow/Overlay (drawer) and Shadow/Card (takeover content column).
 
 Other composites (App Shell sidebar/topbar, agent card, workflow node, step-timeline row, chat bubble, etc.) are currently built **in-place within screens** to shadcn spec, not yet extracted into standalone component sets. Extracting them is a future enhancement (and the target for the shadcn-kit swap below).
 
