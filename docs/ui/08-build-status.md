@@ -107,18 +107,20 @@ Worked example: **add the Linear MCP via OAuth**. Reworked from the old side-dra
 
 **Entry point:** Tool & MCP Catalogue `56:56` already carries the primary `Add MCP` button in its content header (`brand/tide` fill at node **`56:284`**, label `56:288`) → launches this takeover wizard. The button **pre-existed** from the screen build and was left untouched; it was *not* duplicated (additive check satisfied). The takeover replaces the screen, so there is no parent-screen clone or scrim behind these frames (a change from the old drawer flow). The 5 old drawer frames (`128:57`, `142:56`, `143:68`, `144:80`, `145:92`) were deleted.
 
-### Namespace creation — drawer flow ✅
+### Namespace creation — takeover wizard ✅
 
-Worked example: **create namespace `acme-eu`** (EU data residency). Four standalone snapshots, each a **clone of the Admin screen (`57:56`)** dimmed by a full-frame `text/ink` scrim at 40% opacity, with a right-side **Drawer** (560 wide, 1024 tall) anchored full-height at x=880. Band label **"Namespace creation"** (Display/L, `text/ink`, node `163:62`) sits above frame 1. Laid out at x = i×1540, y = 2480. Drawer title across all frames: "New namespace". Each drawer has a 4-step compact stepper (`① Identity ② Quotas ③ Defaults ④ Review`) advanced to the right step. Drawer applies `DROP_SHADOW` overlay effect; all fills/text bind Paper & Signal variables by name (slug/numeric caps use JetBrains Mono).
+Worked example: **create namespace `acme-eu`** (EU data residency). Four standalone full-screen **takeover wizard** frames — matching the Agent and MCP wizard style exactly (no scrim, no drawer, no parent-screen clone). Hand-built on the **Takeover shell** (`88:26`) pattern: `surface/canvas` (#faf9f5) background, 1440×1024, white topbar (`Conductor · New namespace` left, `Exit ✕` right, 1px `border/hairline` bottom), centered horizontal 4-step stepper (done/active dots+bars bind `brand/tide`, upcoming bind `border/hairline`), centered 720px `surface/card` content column (Shadow/Card, radius 12, 40px padding), sticky footer (ghost Back/Cancel + primary `brand/tide` button). Band label **"Namespace creation"** (Display/L, `text/ink`, node `163:62`) is unchanged above frame 1. Laid out at x = i×1540, y = 2480. All fills/text bind Paper & Signal variables by name (slug/numeric caps use JetBrains Mono).
 
-| Frame # | Step | Node ID |
-|---|---|---|
-| 1 | Identity — Name `acme-eu` · Slug `acme-eu` (Mono/M) · Description "EU-resident tenant for acme support." · Region `eu-west-1 (Frankfurt)` · Cancel / Continue → | `162:62` |
-| 2 | Quotas & Budget — Monthly token cap `50M` (Mono) · Cost cap `$2,000` · Provider rate limit `60 req/min` (Mono) · Max agents `25` (Mono) · Back / Continue → | `163:63` |
-| 3 | Defaults — Default provider Chip `Claude` · Allowed providers multi-select (Claude ✓, OpenAI ✓, Gemini ☐, Grok ☐) · Safety defaults `Standard moderation` + `PII redaction on` · Back / Continue → | `164:62` |
-| 4 | Review & Create — NAMESPACE SUMMARY card with all 11 fields (label Label/S `text/muted`, value Body/M right-aligned; slug/caps/numeric in Mono) · Back / Create namespace | `165:64` |
+Old drawer frames (`162:62`, `163:63`, `164:62`, `165:64`) were deleted and replaced by the frames below.
 
-**Entry point:** Admin screen `57:56` received an additive primary `New namespace` button (`brand/tide` fill, white label, radius 8, ~36px height) inserted between Search and Avatar in the Topbar, at node **`160:2`**. The button was not present before this task; no regression to existing topbar elements.
+| Frame # | Step | Node ID (NEW) | Old Node ID (deleted) |
+|---|---|---|---|
+| 1 | Identity — Name `acme-eu` · Slug `acme-eu` (Mono/M) · Description "EU-resident tenant for acme support." · Region / data residency `eu-west-1 (Frankfurt)` · Cancel / Continue → | `211:62` | `162:62` |
+| 2 | Quotas & Budget — Monthly token cap `50M` (Mono) · Cost cap `$2,000` · Provider rate limit `60 req/min` (Mono) · Max agents `25` (Mono) · Back / Continue → | `211:101` | `163:63` |
+| 3 | Defaults — Default provider Provider Chip `Claude` (tide pill) · Allowed providers checkboxes (Claude ✓, OpenAI ✓, Gemini ☐, Grok ☐) · Safety defaults tags `Standard moderation` + `PII redaction on` · Back / Continue → | `212:62` | `164:62` |
+| 4 | Review & Create — three-section summary (Identity / Quotas & budget / Defaults), Label/S muted CAPS labels + Body/M values, Mono/M for slug/caps; stepper all 4 dots filled `brand/tide` · Back / Create namespace (primary) | `212:110` | `165:64` |
+
+**Entry point:** The `New namespace` button was **moved from the global topbar** into the **content page header** of Admin screen `57:56`, right-aligned next to the "Namespaces" heading — matching how the Agent (`23:3`, btn `25:30`) and MCP (`56:56`, btn `56:284`) journeys place their entry buttons. The content header (`57:279`) was converted to a horizontal auto-layout (`SPACE_BETWEEN`) with a left vertical stack (heading + subtitle) and the `brand/tide` button at right (node `215:92`). The button has been removed from the topbar (old node `160:2` deleted). No regression to other topbar or header content.
 
 ### Knowledge source — drawer flow ✅
 
