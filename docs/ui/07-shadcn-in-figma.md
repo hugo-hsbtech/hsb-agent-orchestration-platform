@@ -139,3 +139,37 @@ Screenshotted each component (and the whole band). Confirmed: warm-paper surface
 
 ### Effort signal for P2 rollout
 Each atom took ~1 short scripted pass (clone → detach → componentize → re-bind paints → font override → sizing fix → verify). The genuinely-atomic primitives (Input, Badge, extracted Button/Tabs) are now **canonical and reusable** — P2 can instance these instead of re-rethemeing per screen, which collapses the per-instance grind for these four. The standing caveats hold: composites (Card etc.) are still not worth swapping, and a true variable remap still requires the (d) fork-and-republish path. Net: P1 removes the override cost for the four atoms across the screen set; P2's remaining work is swapping screen instances to these local components.
+
+## P2 — reback + pilot-screen rollout (2026-05-26)
+
+P2 did two things: (1) **rebacked** the shared bespoke **Version State Badge** set (`20:23`) so every variant is now shadcn-backed *without touching any instance*, and (2) **finalized** the Agent Catalogue (`23:3`) by swapping its three remaining bespoke primitives for instances of the P1 local components. Figma-only; git commit is this doc delta.
+
+### Reback of the shared badge set (`20:23`) — DONE, all instances preserved
+
+The bespoke set has exactly one component property — `State` (VARIANT) with the 7 options Draft·Staging·Canary·Production·Running·Failed·Paused — and **no** text/boolean/instance-swap props. A blast-radius scan found ~29 live instances across 4 pages (Screens 17, Components 6, Agent creation 4, Trigger creation 2; none on MCP / Namespace / KB / Lists / shadcn pilot). All sampled instances had **zero overrides** (default text matching their variant).
+
+**Reback mechanic (no detach, no rename, no id change):** for each of the 7 variant COMPONENT nodes inside `20:23`, the inner hand-built `ellipse + text` was replaced with a nested **instance of the matching P1 Badge variant** (`396:74` set): Draft→`395:74`, Staging→`395:78`, Canary→`395:82`, Production→`394:83`, Running→`395:86`, **Failed→`395:90` (error) with the nested label overridden back to "Failed"**, Paused→`395:94`. To avoid a double-pill / layout shift, each wrapper variant's own wash fill, stroke, padding and gap were zeroed so the **nested shadcn instance defines the appearance**; the wrapper stays HUG. Result: every variant kept its exact size (Draft 59×22, Staging 70, Canary 70, Production 89, Running 73, Failed 63, Paused 69 — all unchanged), name, id, and the `State` variant property. Because ids/names/props are untouched, **all ~29 existing instances keep resolving** and simply inherit the shadcn-backed content — no detach, no broken instances.
+
+> Why not a literal "swap-in-place over the bespoke fill": the bespoke variant is itself a complete wash pill (fill + padding + dot + text). Nesting a shadcn pill *inside* it unchanged would double the background and padding. Zeroing the wrapper's fill/padding/gap (so the inner instance is the only visible pill) was the only way to keep the outward size and look identical. If that hadn't held, the plan was to STOP and revert — it held cleanly on the first verified variant (Draft) before the other six were applied.
+
+**Badge verification — screenshotted + viewed, all PASS:**
+- **Agent Catalogue `23:3`** — card badges (Production green, Canary orange) render with correct dot+label, wash fills, no empty/broken instances, no layout shift.
+- **Runs `51:56`** — STATUS column shows Running (teal), Failed (red), Paused (orange) from the rebacked set, all correct. (Succeeded badges are a separate component — the set has no Succeeded variant — and were unaffected.)
+- **Version Promotion `48:40`** — Draft/Staging/Canary/Production render correctly both in the promotion-lane cards and the version-history table.
+- The rebacked set itself (`20:23`) screenshots pixel-identical to the original bespoke set, including the "Failed" label (not "Error").
+
+**Other screens get it for free:** because the reback edits the shared variant components in place (ids/names/props unchanged), every other screen's badge instances (Components, Agent creation, Trigger creation, and the rest of Screens) are now shadcn-backed automatically — no per-screen work, no per-instance overrides.
+
+### Agent Catalogue (`23:3`) primitive swaps — DONE
+
+Swapped three in-place bespoke primitives on the **real** `23:3` for instances of the P1 local components (referenced the pilot clone `364:3` for which nodes to target, but instanced the clean P1 locals rather than the pilot's detached kit frames):
+
+| Bespoke (removed) | → P1 component | New instance id |
+|---|---|---|
+| `Button/New agent` `25:30` (Catalogue Header `25:18`) | Button primary `391:79` | **`425:105`** |
+| FilterBar `Search field` `301:58` | Input `393:94` | **`426:107`** (resized to 190w, placeholder "Search agents…") |
+| `ViewToggle` `301:79` (Blocks/Table) | Segmented `398:81` (Blocks active) | **`427:110`** |
+
+Each instance was inserted at the original node's index in its auto-layout parent, then the bespoke node removed — position/order preserved, tokens stay bound (the P1 components carry the P&S bindings). Sizes follow the P1 spec (button HUG 95×36; input 190×36 vs old 28h; segmented 160×36 vs old 148×31) — minor height bumps from the P1 36px normalization, no layout break. `get_screenshot` of `23:3` (full + FilterBar `301:56` + Catalogue Header `25:18` crops) confirms: Tide-filled "New agent" button, shadcn Input with hairline border, Segmented with Tide active "Blocks" / muted "Table" — the active-pill being Tide (not a white sunken pill) is the canonical P1 Segmented appearance, verified against `398:81` itself, not a regression.
+
+**Status: DONE.** Reback preserved all instances across all 4 pages; the three `23:3` swaps are clean. The Version State Badge is now shadcn-backed everywhere it appears.
