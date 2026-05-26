@@ -70,18 +70,18 @@ Runs is table-first (its default is the Datatable); the catalogues are blocks-fi
 
 **States gallery** (`278:2`, y=1240): Empty `343:2` · Filtered-to-nothing `345:2` · Loading-blocks `346:2` · Loading-table `347:2` · Error `348:2` · End-of-list `349:2`.
 
-## F. Mapping to the remaining list screens
+## F. Rollout to the remaining list screens — DONE ✅ (2026-05-26)
 
-Not built (designed on the 3 representative screens above); the global shadcn pass rolls the pattern out everywhere. Suggested default view + facets:
+The pattern was rolled out **in place** to all remaining list screens (FilterBar + default view + pagination; no separate toggled frames — the toggle is showcased on the 3 representative screens above). Each kept its entry button(s).
 
-| Screen | Node | Default view | Facets |
-|---|---|---|---|
-| KB Management (sources) | `68:56` | Blocks | Source type · Status · Collection · Freshness |
-| Marketplace | `71:56` | Blocks | Category · Rating · Provider · Publisher |
-| Scheduling (triggers) | `67:56` | Datatable | Trigger type · Status · Target agent · Namespace |
-| Compliance (audit log) | `72:56` | Datatable | Event type · Actor · Severity · Time range |
-| Admin (namespaces) | `57:56` | Datatable | Region · Tier · Status |
-| Memory Inspector | `74:56` | Datatable | Tier (working/episodic/semantic) · User · Recency |
-| Evaluations | `44:40` | Datatable | Suite · Result · Agent version · Time range |
+| Screen | Node | Default view | Facets | Pager / count |
+|---|---|---|---|---|
+| KB Management (sources) | `68:56` | Blocks | Source type · Status · Collection · Freshness | Showing 12 of 38 + sentinel |
+| Marketplace | `71:56` | Blocks | Category · Rating · Provider · Publisher | Showing 18 of 64 + sentinel |
+| Scheduling (triggers) | `67:56` | Datatable | Trigger type · Status · Target agent · Namespace | 1–20 of 47 |
+| Compliance (audit log) | `72:56` | Datatable | Event type · Actor · Severity · Time range | 1–20 of 1,204 |
+| Admin (namespaces) | `57:56` | Datatable | Region · Tier · Status | 1–4 of 4 |
+| Memory Inspector | `74:56` | Datatable | Tier (working/episodic/semantic) · User · Recency | 1–20 of 128 |
+| Evaluations | `44:40` | Datatable | Suite · Result · Agent version · Time range | 1–20 of 56 |
 
-> Log/run-like surfaces default to **Datatable** (numbered pages); catalogue-like surfaces default to **Blocks** (infinite scroll). Every adopting screen reuses the same constructs (§A) and honors the same pagination contract (§C), per the [consistency contract](../09-consistency-contract.md).
+> Log/run-like surfaces default to **Datatable** (numbered pages); catalogue-like surfaces default to **Blocks** (infinite scroll). Every screen reuses the same constructs (§A) — search via the shadcn Input, toggle via the shadcn Segmented — and honors the same pagination contract (§C), per the [consistency contract](../09-consistency-contract.md).
