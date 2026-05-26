@@ -1,5 +1,8 @@
 # HSB Agent Orchestration Platform
 
+<img width="2880" height="2048" alt="image" src="https://github.com/user-attachments/assets/50618f04-5546-41a3-be37-3ee237fd9427" />
+
+
 A platform for provisioning and orchestrating specialized AI agents declaratively — no orchestration code required.
 
 ## What it does
@@ -47,6 +50,10 @@ DSL definition → Validation → Versioned storage → Temporal workflow execut
 | **Agent Builder** | Writes DSL definitions and promotes versions |
 | **Operator** | Monitors runs, debugs failures, manages traffic |
 | **End User** | Talks to chatbots backed by the platform |
+
+## Figma project
+
+[https://www.figma.com/design/wgCEx2MmeF3tGDeulGmVqI/Conductor--agent-platform?node-id=23-3&m=dev](https://www.figma.com/design/wgCEx2MmeF3tGDeulGmVqI/Conductor--agent-platform?node-id=23-3&m=dev)
 
 ## Deeper reading
 
