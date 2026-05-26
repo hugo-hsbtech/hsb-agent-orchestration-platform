@@ -138,6 +138,18 @@ Worked example: **add `acme-helpcenter` web crawl** (ties to the `kb_lookup` sto
 
 **Entry point:** KB Management screen `68:56` already carries the primary `Add source` button in the content header at node **`68:284`** (`brand/tide` fill, white label, placed next to the "Knowledge Base" page heading — NOT the global topbar). The button **pre-existed** from the original screen build and was not touched (additive check satisfied).
 
+### Credentials — takeover wizard ✅
+
+Built 2026-05-25 (fresh, no prior drawer version). **Full-screen takeover wizard** matching the Agent, MCP, Namespace, KB, and Trigger wizard style (no drawers, no scrim, no parent-screen clone). Three standalone full-screen frames, each hand-built on the **Takeover shell** (`88:26`) pattern: full 1440×1024 on `surface/canvas` (#faf9f5), top bar (**"Conductor · Add credential"** left in Hanken SemiBold, `Exit ✕` right, 1px `border/hairline` bottom), centered horizontal 3-step stepper (`① Enter ② Verify ③ Stored` — dots without text labels; done/active dots+bars bind `brand/tide`, upcoming bind `border/hairline`; `Step N of 3` label at right), centered 720px `surface/card` content column (Shadow/Card, radius 12), sticky footer (ghost Cancel/Back + primary `brand/tide` button). Band label **"Credentials"** (Display/L, `text/ink`, node `247:81`) at y=6080. Laid out at x = i×1540, y = 6200. Worked example: **Anthropic production key** (`sk-ant-••••••••` / `sk-ant-…3f9`). All fills/text bind Paper & Signal variables by name (key value and vault URI use JetBrains Mono); no bare hex literals.
+
+| Frame # | Step | Node ID |
+|---|---|---|
+| 1 | Enter — Type select (`Provider API key` / `OAuth app` / `Secret`) · Provider Claude chip (tide border+wash, orange dot) · API Key `sk-ant-••••••••` (Mono/M) · Label `Anthropic — production` · Namespace scope `acme` · Rotation reminder toggle ON "90 days" · Cancel / **Verify →** · Stepper step 1 active | `247:82` |
+| 2 | Verify — Summary row (`Anthropic — production`, Mono `sk-ant-••••••••  ·  Provider API key  ·  Claude`) · **Result chip success** "Key valid · models reachable" (green) · note: error chip shown if key rejected · Back / **Save →** · Stepper step 2 active (1 done) | `248:81` |
+| 3 | Stored — Success banner (green top bar) · KEY (MASKED) `sk-ant-…3f9` (Mono/M) · VAULT LOCATION `vault://acme/anthropic` (Mono/M, tide color) · LAST VERIFIED `just now` · STATUS chip **Active** (state/production green) · Stepper all 3 filled · **Done** (primary) | `249:81` |
+
+**Entry point:** Admin screen `57:56` → CREDENTIALS card (`58:83`). Added a small primary `+ Add credential` button (node **`250:56`**, `brand/tide` fill, white label Hanken SemiBold 11px, height 28px, radius 8, absolute-positioned top-right of the CREDENTIALS card). No regression to "New namespace" header or other content.
+
 ### Trigger creation — takeover wizard ✅
 
 Reworked 2026-05-25: **converted from side-drawer to full-screen takeover wizard**, matching the Agent, MCP, Namespace, and KB wizard style exactly (no scrim, no parent-screen clone, no drawer). Five old drawer frames (`187:65`, `188:64`, `189:64`, `190:64`, `191:64`) were deleted; band label **"Trigger creation"** (`text/ink`, node `187:64`) at y=4840 was preserved.
