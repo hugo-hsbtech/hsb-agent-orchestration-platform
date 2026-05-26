@@ -80,24 +80,66 @@ Laid out left→right at x = index × 1540. One shared **acme-support** customer
 
 Six multi-step **takeover-wizard** creation/onboarding flows, all unified on one style (the Agent-creation wizard): full-screen `surface/canvas` frame, top bar `Conductor · {flow}` + `Exit ✕`, centered horizontal stepper (`Step N of M`, no per-step text labels), centered ~720px `surface/card` content column (Shadow/Card, radius 12), sticky footer (ghost Back/Cancel + primary `brand/tide`). No side-drawers, scrims, or parent-screen clones — an earlier side-drawer approach for five of the journeys was **reworked to takeover** for consistency (per user direction, 2026-05-25). They compose the reusable creation-flow primitives (Stepper/Takeover shell, Connector card, Result chip, Progress-step row) plus Version State Badge / Provider Chip, over the same **acme** customer-support story. Each frame is 1440×1024 with a Display/L band label. *(The `Drawer shell` `87:30` and the Stepper `Drawer/Compact` variant `84:2` from Task 0 are now unused — retained for possible future use.)*
 
-### Agent creation — takeover wizard ✅ (page 265:2)
+### Agent creation — 4-band layout (page 265:2) — batch 1 ✅ 2026-05-26
 
-Worked example: create top-level **chatbot `acme-concierge`** (router, draft `v0.1`) routing to the existing `payments` / `technical` / `knowledge` specialists. The 7-step chatbot spine plus one diverging workflow-tail frame. Each frame is a (detached) instance of the **Takeover shell** (`88:26`), top-bar flow name **Conductor · New agent**, with its Takeover/Horizontal Stepper rebuilt to the right step count/position.
+**Page expanded to 4 bands** (batch 1 of N). The original 7-step chatbot spine + workflow-tail frame has been reorganized into a multi-band canvas. Band labels are Display/L, `text/ink`, using Bricolage Grotesque SemiBold.
 
-| Frame | Step | Node ID |
-|---|---|---|
-| 1 | Type (Chatbot selected / Workflow) | `106:221` |
-| 2 | Identity (`acme-concierge`, ns `acme`, owner, tags) | `106:237` |
-| 3 | Model & Provider (Claude · `claude-opus-4-7` · temp 0.3 · 4096 · router prompt) | `106:253` |
-| 4 | Routing & Specialists (LLM classifier · 0.72 · payments/technical/knowledge Production) | `106:269` |
-| 5 | Knowledge & Memory (acme Qdrant KB · Working/Episodic 30d/Semantic) | `106:285` |
-| 6 | Safety (Standard moderation · PII redaction · blocked topics · refusal) | `106:301` |
-| 7 | Review & Create (two-col summary · Draft `v0.1` rail · Create as draft) | `106:317` |
-| 8 | Workflow tail — Triggers → Open builder (Manual selected; 4-step path) | `106:333` |
+#### Band layout
 
-**Entry point:** Agent Catalogue `23:3` carries the primary `New agent` button (`brand/tide` fill, white label bound to `text/on-brand`, right-aligned in the Catalogue Header toolbar) at node **`25:30`** → launches this wizard. The workflow tail's `Create draft & open builder` implies handoff to the existing Workflow editor (`35:34`).
+| Band | Label node | y-position | Content |
+|---|---|---|---|
+| 1 · Happy path — Chatbot | `473:72` | y=70 | 7 existing chatbot wizard frames + new Created frame (y=120) |
+| 2 · Workflow path | `473:73` | y=1280 | Workflow tail `106:333` relocated to (x=0, y=1400) |
+| 3 · Chatbot — branch variants | `473:74` | y=2560 | (empty — future batches) |
+| 4 · Edge cases & validation | `473:75` | y=3840 | (empty — future batches) |
 
-Steppers: chatbot frames show 1→7 of 7; the workflow tail shows the shorter 4-step path (Type · Identity · Model · Triggers, step 4 of 4). All text binds Paper & Signal styles by name; the machine register (IDs, slug, numbers, model name, router prompt) uses JetBrains Mono (Mono/M, Mono/S).
+#### Batch 1 changes
+
+**Enrichment — Type `106:221`:** Added sub-mode note `466:70` (Body/S, `text/muted`) below the type cards: *"Router — routes each turn to a specialist · or Single specialist — answers directly (chosen in Routing step)."* — stays inside the content column VERTICAL auto-layout.
+
+**Enrichment — Model `106:253`:** Added "Field · Fallback provider" `471:70` between Model params and Router prompt. Contains: SemiBold `Fallback provider` label + horizontal row with **Provider Chip (OpenAI)** instance `471:73` + Body/S `text/muted` helper *"Used on ProviderUnavailable / RateLimit"*.
+
+**Move — Workflow tail `106:333`:** Relocated from (x=10780, y=120) → **(x=0, y=1400)** under the Row-2 band label. Content (Triggers picker) intact. Stepper updated to **Step 4 of 4** (workflow path: Type · Identity · Model · Triggers).
+
+**New frame — Agent · Created (chatbot draft)** at **(x=10780, y=120)** — end of Row 1:
+
+| Node | Role |
+|---|---|
+| `476:72` | Frame — "Agent · Created (chatbot draft)", 1440×1024 |
+| `476:73` | Top bar — "Conductor · New agent" + Exit ✕ |
+| `477:72` | Stepper region — 7 dots all teal + "Step 7 of 7" |
+| `478:72` | Content region (centered 720×762 card) |
+| `482:76` | Success icon container — teal circle + ✓ check (brand/tide) |
+| `478:76` | Heading — "Agent created" (Display/L, Bricolage) |
+| `479:72` | Version State Badge instance (Draft variant, `20:2`) |
+| `479:77` | Version text — "acme-concierge v0.1" (JetBrains Mono) |
+| `479:78` | Draft note — "Draft — won't serve traffic until promoted…" (Body/S, `text/muted`) |
+| `481:76` | Footer — secondary "Back to Catalogue" + secondary "Test in Playground" + primary "Promote" (brand/tide) |
+
+Worked example: create top-level **chatbot `acme-concierge`** (router, draft `v0.1`) routing to the existing `payments` / `technical` / `knowledge` specialists. Each frame is built on the **Takeover shell** (`88:26`) pattern, top-bar flow name **Conductor · New agent**, stepper dots+bars (done=`brand/tide`, upcoming=`border/hairline`).
+
+#### Full frame list — Row 1 (y=120)
+
+| Frame | Step | Node ID | x |
+|---|---|---|---|
+| 1 | Type — enriched: sub-mode note added | `106:221` | 0 |
+| 2 | Identity (`acme-concierge`, ns `acme`, owner, tags) | `106:237` | 1540 |
+| 3 | Model & Provider — enriched: Fallback provider field added | `106:253` | 3080 |
+| 4 | Routing & Specialists | `106:269` | 4620 |
+| 5 | Knowledge & Memory | `106:285` | 6160 |
+| 6 | Safety | `106:301` | 7700 |
+| 7 | Review & Create | `106:317` | 9240 |
+| **8** | **Agent · Created (chatbot draft)** — NEW | **`476:72`** | **10780** |
+
+#### Row 2 frame list (y=1400)
+
+| Frame | Step | Node ID | x |
+|---|---|---|---|
+| 1 | Workflow tail — Triggers picker (Step 4 of 4) — RELOCATED from Row 1 | `106:333` | 0 |
+
+**Entry point:** Agent Catalogue `23:3` → `New agent` button (`25:30`). The workflow tail's `Create draft & open builder` implies handoff to Workflow editor (`35:34`).
+
+Steppers: chatbot frames show 1→7 of 7; Created frame shows all-7 teal (Step 7 of 7); workflow tail shows 4-step path (Step 4 of 4). All text binds Paper & Signal styles by name; machine register uses JetBrains Mono.
 
 ### MCP creation — takeover wizard ✅ (page 266:2)
 
