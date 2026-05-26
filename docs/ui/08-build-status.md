@@ -9,7 +9,7 @@
 | **File** | "Conductor — Paper & Signal" |
 | **fileKey** | `wgCEx2MmeF3tGDeulGmVqI` |
 | **URL** | https://www.figma.com/design/wgCEx2MmeF3tGDeulGmVqI |
-| **Pages** | `Cover` (0:1) · `Foundations` (15:2) · `Components` (15:3) · `Screens` (23:2) · `Journeys` (82:2) |
+| **Pages** | `Cover` (0:1) · `Foundations` (15:2) · `Components` (15:3) · `Screens` (23:2) · `Agent creation` (265:2) · `MCP creation` (266:2) · `Namespace creation` (267:2) · `KB source` (268:2) · `Trigger creation` (270:2) · `Credentials` (271:2) |
 
 ## Design system — DONE ✅ (Foundations page 15:2)
 
@@ -70,11 +70,13 @@ Laid out left→right at x = index × 1540. One shared **acme-support** customer
 **Nav (final, consistent across all 20 sidebars):**
 `BUILD` Agents · Playground · Evaluations — `OPERATE` Runs · Traces · Health · Memory — `ENGAGE` Chat — `CATALOG` Tools & MCPs · Knowledge Base · Scheduling · Marketplace — `INSIGHTS` Analytics — `ADMIN` Namespaces · Compliance · Model routing · Settings. *(Settings has no standalone screen — folds into the Admin/Namespaces view.)*
 
-## Journeys — DONE ✅ (Journeys page 82:2)
+## Journeys — DONE ✅ (split into per-flow pages, 2026-05-25)
 
-Six multi-step **takeover-wizard** creation/onboarding flows, all unified on one style (the Agent-creation wizard): full-screen `surface/canvas` frame, top bar `Conductor · {flow}` + `Exit ✕`, centered horizontal stepper (`Step N of M`, no per-step text labels), centered ~720px `surface/card` content column (Shadow/Card, radius 12), sticky footer (ghost Back/Cancel + primary `brand/tide`). No side-drawers, scrims, or parent-screen clones — an earlier side-drawer approach for five of the journeys was **reworked to takeover** for consistency (per user direction, 2026-05-25). They compose the reusable creation-flow primitives (Stepper/Takeover shell, Connector card, Result chip, Progress-step row) plus Version State Badge / Provider Chip, over the same **acme** customer-support story. Laid out in horizontal bands (one per journey) at x = index × 1540, each frame 1440×1024, with a Display/L band label above each band. *(The `Drawer shell` `87:30` and the Stepper `Drawer/Compact` variant `84:2` from Task 0 are now unused — retained for possible future use.)*
+> **Page structure update (2026-05-25):** The single `Journeys` page (`82:2`) has been split into **one Figma page per flow**. Each flow's band label and frames were moved to a dedicated page and normalized so the band label sits at (0, 0) and frames run left→right at y=120, x = i×1540. The `Journeys` page was then emptied and deleted. The per-flow pages are: `Agent creation` (265:2) · `MCP creation` (266:2) · `Namespace creation` (267:2) · `KB source` (268:2) · `Trigger creation` (270:2) · `Credentials` (271:2).
 
-### Agent creation — takeover wizard ✅
+Six multi-step **takeover-wizard** creation/onboarding flows, all unified on one style (the Agent-creation wizard): full-screen `surface/canvas` frame, top bar `Conductor · {flow}` + `Exit ✕`, centered horizontal stepper (`Step N of M`, no per-step text labels), centered ~720px `surface/card` content column (Shadow/Card, radius 12), sticky footer (ghost Back/Cancel + primary `brand/tide`). No side-drawers, scrims, or parent-screen clones — an earlier side-drawer approach for five of the journeys was **reworked to takeover** for consistency (per user direction, 2026-05-25). They compose the reusable creation-flow primitives (Stepper/Takeover shell, Connector card, Result chip, Progress-step row) plus Version State Badge / Provider Chip, over the same **acme** customer-support story. Each frame is 1440×1024 with a Display/L band label. *(The `Drawer shell` `87:30` and the Stepper `Drawer/Compact` variant `84:2` from Task 0 are now unused — retained for possible future use.)*
+
+### Agent creation — takeover wizard ✅ (page 265:2)
 
 Worked example: create top-level **chatbot `acme-concierge`** (router, draft `v0.1`) routing to the existing `payments` / `technical` / `knowledge` specialists. The 7-step chatbot spine plus one diverging workflow-tail frame. Each frame is a (detached) instance of the **Takeover shell** (`88:26`), top-bar flow name **Conductor · New agent**, with its Takeover/Horizontal Stepper rebuilt to the right step count/position.
 
@@ -93,7 +95,7 @@ Worked example: create top-level **chatbot `acme-concierge`** (router, draft `v0
 
 Steppers: chatbot frames show 1→7 of 7; the workflow tail shows the shorter 4-step path (Type · Identity · Model · Triggers, step 4 of 4). All text binds Paper & Signal styles by name; the machine register (IDs, slug, numbers, model name, router prompt) uses JetBrains Mono (Mono/M, Mono/S).
 
-### MCP creation — takeover wizard ✅
+### MCP creation — takeover wizard ✅ (page 266:2)
 
 Worked example: **add the Linear MCP via OAuth**. Reworked from the old side-drawer flow into a **full-screen takeover wizard** matching the Agent-creation journey (one consistent creation style — no drawers, no scrim, no parent-screen clone). Five standalone frames, each a hand-built copy of the **Takeover shell** (`88:26`): full 1440×1024 on `surface/canvas`, top bar (`Conductor · Add MCP` left, `Exit ✕` right), a centered horizontal 5-step stepper (`① Connect ② Auth ③ Discover ④ Test ⑤ Register` — `Step N of 5`; done/active dots+bars bind `brand/tide`, upcoming bind `border/hairline`), a centered 720px `surface/card` content column (Shadow/Card, radius 12), and a sticky footer (ghost Back/Cancel + primary `brand/tide` button). Band label **"MCP creation"** (Display/L, `text/ink`, node `128:56`) is unchanged above frame 1. Laid out at x = i×1540, y = 1240. All fills/text bind Paper & Signal variables/styles by name (machine register — URLs, env keys, tool IDs, latency, name/version — uses JetBrains Mono); the Result chip instances the shared `89:46` component.
 
@@ -107,7 +109,7 @@ Worked example: **add the Linear MCP via OAuth**. Reworked from the old side-dra
 
 **Entry point:** Tool & MCP Catalogue `56:56` already carries the primary `Add MCP` button in its content header (`brand/tide` fill at node **`56:284`**, label `56:288`) → launches this takeover wizard. The button **pre-existed** from the screen build and was left untouched; it was *not* duplicated (additive check satisfied). The takeover replaces the screen, so there is no parent-screen clone or scrim behind these frames (a change from the old drawer flow). The 5 old drawer frames (`128:57`, `142:56`, `143:68`, `144:80`, `145:92`) were deleted.
 
-### Namespace creation — takeover wizard ✅
+### Namespace creation — takeover wizard ✅ (page 267:2)
 
 Worked example: **create namespace `acme-eu`** (EU data residency). Four standalone full-screen **takeover wizard** frames — matching the Agent and MCP wizard style exactly (no scrim, no drawer, no parent-screen clone). Hand-built on the **Takeover shell** (`88:26`) pattern: `surface/canvas` (#faf9f5) background, 1440×1024, white topbar (`Conductor · New namespace` left, `Exit ✕` right, 1px `border/hairline` bottom), centered horizontal 4-step stepper (done/active dots+bars bind `brand/tide`, upcoming bind `border/hairline`), centered 720px `surface/card` content column (Shadow/Card, radius 12, 40px padding), sticky footer (ghost Back/Cancel + primary `brand/tide` button). Band label **"Namespace creation"** (Display/L, `text/ink`, node `163:62`) is unchanged above frame 1. Laid out at x = i×1540, y = 2480. All fills/text bind Paper & Signal variables by name (slug/numeric caps use JetBrains Mono).
 
@@ -122,7 +124,7 @@ Old drawer frames (`162:62`, `163:63`, `164:62`, `165:64`) were deleted and repl
 
 **Entry point:** The `New namespace` button was **moved from the global topbar** into the **content page header** of Admin screen `57:56`, right-aligned next to the "Namespaces" heading — matching how the Agent (`23:3`, btn `25:30`) and MCP (`56:56`, btn `56:284`) journeys place their entry buttons. The content header (`57:279`) was converted to a horizontal auto-layout (`SPACE_BETWEEN`) with a left vertical stack (heading + subtitle) and the `brand/tide` button at right (node `215:92`). The button has been removed from the topbar (old node `160:2` deleted). No regression to other topbar or header content.
 
-### Knowledge source — takeover wizard ✅
+### Knowledge source — takeover wizard ✅ (page 268:2)
 
 Reworked 2026-05-25: **converted from side-drawer to full-screen takeover wizard**, matching the Agent, MCP, and Namespace wizard style (no scrim, no parent-screen clone, no drawer). Five old drawer frames (`176:64`, `178:64`, `179:64`, `180:64`, `181:64`) were deleted; band label **"Knowledge source"** (Display/L, `text/ink`, node `182:64`) at y=3600 was preserved.
 
@@ -138,7 +140,7 @@ Worked example: **add `acme-helpcenter` web crawl** (ties to the `kb_lookup` sto
 
 **Entry point:** KB Management screen `68:56` already carries the primary `Add source` button in the content header at node **`68:284`** (`brand/tide` fill, white label, placed next to the "Knowledge Base" page heading — NOT the global topbar). The button **pre-existed** from the original screen build and was not touched (additive check satisfied).
 
-### Credentials — takeover wizard ✅
+### Credentials — takeover wizard ✅ (page 271:2)
 
 Built 2026-05-25 (fresh, no prior drawer version). **Full-screen takeover wizard** matching the Agent, MCP, Namespace, KB, and Trigger wizard style (no drawers, no scrim, no parent-screen clone). Three standalone full-screen frames, each hand-built on the **Takeover shell** (`88:26`) pattern: full 1440×1024 on `surface/canvas` (#faf9f5), top bar (**"Conductor · Add credential"** left in Hanken SemiBold, `Exit ✕` right, 1px `border/hairline` bottom), centered horizontal 3-step stepper (`① Enter ② Verify ③ Stored` — dots without text labels; done/active dots+bars bind `brand/tide`, upcoming bind `border/hairline`; `Step N of 3` label at right), centered 720px `surface/card` content column (Shadow/Card, radius 12), sticky footer (ghost Cancel/Back + primary `brand/tide` button). Band label **"Credentials"** (Display/L, `text/ink`, node `247:81`) at y=6080. Laid out at x = i×1540, y = 6200. Worked example: **Anthropic production key** (`sk-ant-••••••••` / `sk-ant-…3f9`). All fills/text bind Paper & Signal variables by name (key value and vault URI use JetBrains Mono); no bare hex literals.
 
@@ -150,7 +152,7 @@ Built 2026-05-25 (fresh, no prior drawer version). **Full-screen takeover wizard
 
 **Entry point:** Admin screen `57:56` → CREDENTIALS card (`58:83`). Added a small primary `+ Add credential` button (node **`250:56`**, `brand/tide` fill, white label Hanken SemiBold 11px, height 28px, radius 8, absolute-positioned top-right of the CREDENTIALS card). No regression to "New namespace" header or other content.
 
-### Trigger creation — takeover wizard ✅
+### Trigger creation — takeover wizard ✅ (page 270:2)
 
 Reworked 2026-05-25: **converted from side-drawer to full-screen takeover wizard**, matching the Agent, MCP, Namespace, and KB wizard style exactly (no scrim, no parent-screen clone, no drawer). Five old drawer frames (`187:65`, `188:64`, `189:64`, `190:64`, `191:64`) were deleted; band label **"Trigger creation"** (`text/ink`, node `187:64`) at y=4840 was preserved.
 
