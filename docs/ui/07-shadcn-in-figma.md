@@ -63,3 +63,51 @@ The shadcn primitives we need (all standard in any kit) map to the [02-design-sy
 - 🔗 Alternative if no kit is brought in: keep rebuilding shadcn primitives to spec in-file (already done for Badge / Provider Chip / Tabs) — fully in-Figma and on-theme, lower fidelity to "real shadcn".
 
 > Cross-ref: [06-learnings.md](./06-learnings.md) §11 (shadcn not importable; SDS is the only code-backed kit currently attached).
+
+## shadcn pilot findings (2026-05-25)
+
+The one-time setup above has happened: the Conductor file (`wgCEx2MmeF3tGDeulGmVqI`) now subscribes to **"shadcn/ui components with variables & Tailwind classes — Updated January 2026 (Community)"** (`libraryKey lk-1865af9c…f294ea`, source `team`). This pilot tested swapping the Agent Catalogue's hand-built primitives for *real* imported shadcn components, rethemed to Paper & Signal. Work was done on an isolated **clone** — the canonical `23:3` was verified untouched after.
+
+**Status: DONE_WITH_CONCERNS.** Import works and the retheme is faithful at screen scale, but the kit's published component keys point at *example/documentation frames*, not atomic primitives, and the kit's variables are **remote/read-only** — so a clean variable remap is impossible in-file; every swap is a per-instance override.
+
+### Import mechanics — WORKS
+- `importComponentByKeyAsync` / `importComponentSetByKeyAsync` succeed from the subscribed kit. No auth or availability errors. `createInstance()` on imported variants works.
+- Kit component keys imported in the pilot: Button set `3d180da66113aba935827ccafb0cb5245aa3ea7b`; Button (example) `32f61cc2142d340523b7146f658e83c5a3450ca3`; Badge set `6dd09bda467636231718db7abae5b752a76082af`; Input `e595971f3dde8ccc2b78eb90ac7e60de9937e368`; Card (example) `969665763ffec8b06e08524bb3a5537e20d21f83`; Tabs (example) `c1b03efc4dc493d1e27472b5a3d60e4b3f6200e8`; Select set `d9b648b7f45f9abda1b72f0b6450c9e0cc32d986`.
+
+### Retheme mechanism — per-instance override ONLY
+The kit is variable-based, but its variables live in **remote library collections** (`mode` with only `light mode`/`dark mode`; plus `tw/font`, `tw/padding`, `tw/border-width`, `tw/stroke-width`). In the consuming file these are read-only:
+- (a) **Overwrite the kit's variable values** — BLOCKED. `setValueForMode` on a kit variable throws *"Cannot write to internal and read-only node. Are you trying to modify a remote style or component?"*
+- (b) **Alias the kit's variables to ours** — BLOCKED for the same reason (can't rebind a remote variable in this file).
+- (c) **Per-instance overrides** — FEASIBLE and what the pilot used. After placing an instance, re-bind each paint to our P&S variables with `figma.variables.setBoundVariableForPaint(paint, 'color', psVar)` (e.g. button bg → `brand/tide`, label → `text/on-brand`, badge → `state/*` + `state/*-wash`, input → `surface/card`/`border/hairline`/`text/faint`). Token-driven, not hardcoded hex — good.
+- (d) **Edit + republish the source kit file** — the only route to a true variable remap (add a "Paper & Signal" mode, or repoint `mode` values, in the kit's own file). Out of scope for in-file work; this is the clean rollout path if a full swap is pursued.
+
+### The real blocker — published keys are example frames, not atoms
+Every "primitive" except Input turned out to be a **multi-element showcase frame**:
+- **Button** set variants are *rows of 3 buttons* (default/outline/ghost, ~267px, 3 text nodes). The standalone "Button" component key is an *Accept ⏎ / Cancel Esc* button-group example. The usable atomic button is a nested `FRAME "Button"` inside — reachable only by `createInstance()` → `detachInstance()` → extract the inner frame.
+- **Card** key is a 368×394 form composite (header + labelled inputs + button rows) — not a container card. Not usable as the AgentCard shell without rebuilding.
+- **Tabs** key is a 398×406 tab-strip-plus-demo-card; the inner `FRAME "Tabs" 160×36` is a clean atomic segmented control (extractable the same detach-and-lift way).
+- **Input** `e595971f…` is genuinely atomic (231×36, placeholder text + lucide search icon) — the one clean drop-in.
+- **Badge** set is a proper variant set (`Type` = default/secondary/destructive/outline/…number/icon) — atomic and usable via `createInstance()` on a variant; needs hug-fix (kit padding wraps long labels) + state-color override.
+
+### What was swapped on the clone (all rethemed to P&S)
+- **New agent button** → atomic shadcn Button (extracted from example), bg `brand/tide`, label `text/on-brand`. Clean.
+- **Topbar search** → shadcn Input, `surface/card` + `border/hairline` + faint placeholder. Clean (icon sits right, vs left in the original — minor).
+- **4 version-state badges** (3× Production, 1× Canary) → shadcn Badge `secondary`, fill `state/*-wash`, text `state/*`, hugged to single line.
+- **ViewToggle (Blocks/Table)** → atomic shadcn Tabs strip (extracted), sunken track + white active pill + ink/muted labels.
+- **Agent card shells** — NOT swapped (kit Card is a form composite; a faithful swap would mean detach + rebuild, no fidelity gain).
+
+### Fidelity — good at screen scale
+Side-by-side, the rethemed shadcn components are visually indistinguishable from the bespoke ones (warm paper, Tide accent, correct state colors). Two caveats: (1) the kit's text uses its own `family/sans`, **not Hanken Grotesk** — a font override per text node is required for type fidelity (the pilot set characters/colors but the family stays the kit's until explicitly overridden); (2) kit Badge padding is looser than our spec and needs a hug-fix.
+
+### Effort to roll out (~26 screens + 6 journeys + Lists)
+**Per-component override grind, not a clean remap.** Each instance needs: detach-and-extract (for Button/Card/Tabs/anything composite) + N paint re-binds + font-family override per text node + hug/size fixes. Estimate ~5–15 min per distinct component *type* to script a reusable helper, then bulk-apply — but composites (Card especially) approach the cost of just keeping our bespoke build. Realistic: a few days to swap the genuinely-atomic primitives (Input, Badge, the extracted Button/Tabs atoms) across all screens; the composites are not worth swapping.
+
+### Recommendation — PARTIAL swap
+- **Worth swapping:** Input, Badge (with hug-fix), and the *extracted* atomic Button and Tabs/segmented control. These are real shadcn, retheme cleanly, and are faithful.
+- **Not worth swapping:** Card and any composite — the kit ships them as documentation examples, so the swap is a detach-and-rebuild with zero fidelity gain over our bespoke components. Our signature composites (Agent Card, Version-State Badge semantics, Provider Chip, Workflow Node, etc.) stay bespoke regardless.
+- **If a full real-shadcn mandate is required:** do it the (d) way — fork the kit file, add a Paper & Signal variable mode there, republish — so instances retheme by *mode switch* instead of thousands of per-instance overrides. That is the only path that scales across 26 screens without an override grind.
+
+### Pilot artifacts
+- Pilot page: **`shadcn pilot`** = node `364:2`.
+- Clone of Agent Catalogue: `364:3` (original `23:3` confirmed untouched).
+- Swapped instance IDs: New agent button `377:73`; topbar Input `380:67`; badges `383:111`/`383:114`/`383:117`/`383:120`; ViewToggle Tabs `386:280`.
