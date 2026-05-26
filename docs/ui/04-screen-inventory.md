@@ -8,6 +8,7 @@ Every screen lists the **capabilities and decisions** it demonstrates, so the sh
 
 - **Tier 1 — Core (12 screens):** the spine of "what's possible." Covers the full primary value flow (define → validate → prove → promote → run → observe → talk) plus the highest-impact surfaces the first 10-screen pass missed (playground, evaluation). Build these first.
 - **Tier 2 — Extended (8 screens):** the enterprise-grade breadth (trace/replay, health, scheduling, KB lifecycle, marketplace, compliance, model routing, memory). Build to complete the full "what's possible" picture.
+- **Tier 3 — Setup Journeys (6 flows):** the multi-step **takeover wizards** that *create* the artifacts the screens display — agent, MCP, namespace, KB source, trigger, credential. They live on a dedicated `Journeys` Figma page and complete the lifecycle story (create → configure → run → observe). See the dedicated section below.
 
 A "screen" may include 2–3 designed **states** (e.g. the builder's empty / valid / error states) where the state is the point.
 
@@ -92,6 +93,26 @@ Conversation volume, routing distribution across specialists, agent performance,
 **19. Model Routing & Cost Optimization** — complexity classifier config, tier selection, cascading fallback, response-cache analytics. *(`31`)*
 
 **20. Memory Inspector** — episodic summary browser, semantic profile viewer, memory-injection traces. *(`21`, `AD-30`)*
+
+---
+
+## Tier 3 — Setup Journeys (creation flows)
+
+The Core/Extended screens show the *result* of configured artifacts; the **Setup Journeys** are the multi-step flows that bring those artifacts into existence. All six are **full-screen takeover wizards** sharing one style (top bar `Conductor · {flow}`, centered horizontal stepper, centered ~720px card column, Back/Continue footer), built on the `Journeys` Figma page over the same `acme` story. *(An earlier side-drawer treatment for five of them was reworked to takeover for consistency, 2026-05-25.)* Frame IDs live in [08-build-status](./08-build-status.md).
+
+**J1. Agent creation** — Type (chatbot / workflow) → Identity → Model → *[chatbot]* Routing & Specialists → Knowledge & Memory → Safety → Review; *[workflow]* Triggers → open Visual Builder. The wizard doubles as the **chatbot config surface** (previously runtime-only). → AD-19/20/33, v5, 28, 35, AD-30.
+
+**J2. MCP creation** — Connect (transport) → OAuth → Discover capabilities → Test → Register. Example: Linear via OAuth. → AD-11, AD-18, v3, 25.
+
+**J3. Namespace creation** — Identity (+ region/residency) → Quotas & Budget → Defaults → Review. Example: `acme-eu`. → AD-26, 16, 35.
+
+**J4. Knowledge source + first ingestion** — Choose source (6 connectors) → Configure → Test/preview → Ingest (running state) → Done. Example: `acme-helpcenter` web crawl. → AD-18, 33.
+
+**J5. Trigger creation** — Type (cron / webhook / event) → Configure (per-branch) → Review & Activate. Examples: `kb-refresh` cron, `ticket-created` webhook, Linear event. → 29.
+
+**J6. Credentials** — Enter → Verify → Stored (vault). Example: Anthropic production key. → AD-07/08.
+
+> Each journey's **complete** option/branch set (every path, not just the worked example, plus the actions required to make each path work) is documented per-journey in [`journeys/`](./journeys/).
 
 ---
 

@@ -121,3 +121,7 @@ Concretely, a core-flow-only build leaves these screens on the floor:
 - Trigger Manager, KB Pipeline Monitor, Collaboration Workspace, Memory Dashboard, Model Router (Sophisticated Automation)
 
 For this reason the curated build set in [04-screen-inventory.md](./04-screen-inventory.md) promotes the **Interactive Playground** and **Evaluation** surfaces into **Tier-1 Core** — closing the most visible Quality gap inside the primary flow — and gathers the remaining enterprise surfaces into **Tier-2 Extended**, so the full inventory above stays accounted for without bloating the headline demo.
+
+## Update (2026-05-25) — creation surfaces now realized
+
+The original build covered the *viewing/observing* surfaces but skipped the **creation/setup journeys** that several rows above imply (Create/edit agent DSL, Tools & MCPs *registration* with OAuth, Webhook/cron/event *configuration*, Chatbot routing/memory/safety *config*, Create/manage namespaces, KB *source connectors*, Credentials/vault). These are now realized as the **Tier-3 Setup Journeys** (six takeover wizards) in [04-screen-inventory.md](./04-screen-inventory.md). Notably, **chatbot configuration** (routing rules, specialists, memory tiers, safety policies) — previously present only as *runtime behavior* on the Chat screen — now has a first-class design home inside the Agent-creation wizard. The complete branch/option coverage for each journey is in [`journeys/`](./journeys/).

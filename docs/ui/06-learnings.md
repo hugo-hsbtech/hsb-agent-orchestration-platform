@@ -52,6 +52,17 @@ Setting `layoutMode` on a plain frame leaves its sizing modes fixed at the defau
 **14. `setSharedPluginData` isn't available on `VariableCollection`/`Variable`/`Style` objects in this sandbox.**
 The design-system skill's idempotency tagging assumes it is. Fall back to **name-based idempotency** (look up by name within collection) and track IDs via return values — which works fine.
 
+## Learnings from the setup-journeys build (2026-05-25)
+
+**15. Viewing-surfaces hid the creation journeys — and chatbot config had no home.**
+The 20-screen showcase rendered the *result* of configured artifacts but never the flows that create them. Building the setup journeys surfaced a real gap: **chatbot configuration** (routing, specialists, memory, safety) existed only as runtime behavior on the Chat screen — there was no design surface for *defining* a chatbot. The Agent-creation wizard now doubles as that surface. Lesson: a catalogue-and-dashboard inventory looks complete but silently omits the "bring it into existence" half of every artifact's lifecycle.
+
+**16. Pick the creation pattern once, globally — don't mix takeover and drawer.**
+The journeys were first built "tiered" (full-screen takeover wizard for the long Agent flow; right-side drawers for the lighter MCP/Namespace/KB/Trigger/Credentials flows). Seeing them together, the mixed metaphor read as inconsistent, and they were **reworked to a single takeover-wizard style** for all six. Lesson: for a family of flows, consistency of the *container* beats per-flow optimization — decide the shell pattern once. (Cost: five flows rebuilt. Had we unified up front, that rework was avoidable.)
+
+**17. Component instances vs hand-built — and why the shadcn swap makes it moot.**
+Across journeys, implementers repeatedly **hand-built** chips/cards/steppers instead of instancing the Task-0 component sets (Figma instances block adding/removing children, so custom per-frame content forced detach/rebuild). Visually identical every time, but not "live" instances. We chose **not** to chase instancing hygiene, because the scheduled **global shadcn swap** will replace all in-place primitives with real components anyway — converting hand-built → local-instance first would be throwaway work. Lesson: don't pay down hygiene debt that an imminent, larger refactor will erase.
+
 ## Open questions to resolve before/with the build
 
 - **Exact hexes & font weights** for the Paper & Signal tokens — finalized as Figma variables in Phase A.

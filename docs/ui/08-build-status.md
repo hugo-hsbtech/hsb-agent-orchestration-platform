@@ -70,13 +70,13 @@ Laid out left→right at x = index × 1540. One shared **acme-support** customer
 **Nav (final, consistent across all 20 sidebars):**
 `BUILD` Agents · Playground · Evaluations — `OPERATE` Runs · Traces · Health · Memory — `ENGAGE` Chat — `CATALOG` Tools & MCPs · Knowledge Base · Scheduling · Marketplace — `INSIGHTS` Analytics — `ADMIN` Namespaces · Compliance · Model routing · Settings. *(Settings has no standalone screen — folds into the Admin/Namespaces view.)*
 
-## Journeys — IN PROGRESS (Journeys page 82:2)
+## Journeys — DONE ✅ (Journeys page 82:2)
 
-Multi-step takeover/drawer flows that compose the reusable creation-flow primitives (Stepper, Takeover shell, Connector card, Result chip) over the same **acme** customer-support story. Laid out left→right at x = index × 1540, each frame 1440×1024. Band label **"Agent creation"** (Display/L, `text/ink`) sits above frame 1.
+Six multi-step **takeover-wizard** creation/onboarding flows, all unified on one style (the Agent-creation wizard): full-screen `surface/canvas` frame, top bar `Conductor · {flow}` + `Exit ✕`, centered horizontal stepper (`Step N of M`, no per-step text labels), centered ~720px `surface/card` content column (Shadow/Card, radius 12), sticky footer (ghost Back/Cancel + primary `brand/tide`). No side-drawers, scrims, or parent-screen clones — an earlier side-drawer approach for five of the journeys was **reworked to takeover** for consistency (per user direction, 2026-05-25). They compose the reusable creation-flow primitives (Stepper/Takeover shell, Connector card, Result chip, Progress-step row) plus Version State Badge / Provider Chip, over the same **acme** customer-support story. Laid out in horizontal bands (one per journey) at x = index × 1540, each frame 1440×1024, with a Display/L band label above each band. *(The `Drawer shell` `87:30` and the Stepper `Drawer/Compact` variant `84:2` from Task 0 are now unused — retained for possible future use.)*
 
 ### Agent creation — takeover wizard ✅
 
-Worked example: create top-level **chatbot `acme-concierge`** (router, draft `v0.1`) routing to the existing `payments` / `technical` / `knowledge` specialists. The 7-step chatbot spine plus one diverging workflow-tail frame. Each frame is a (detached) instance of the **Takeover shell** (`88:26`), flow name **New agent**, with its Takeover/Horizontal Stepper rebuilt to the right step count/position.
+Worked example: create top-level **chatbot `acme-concierge`** (router, draft `v0.1`) routing to the existing `payments` / `technical` / `knowledge` specialists. The 7-step chatbot spine plus one diverging workflow-tail frame. Each frame is a (detached) instance of the **Takeover shell** (`88:26`), top-bar flow name **Conductor · New agent**, with its Takeover/Horizontal Stepper rebuilt to the right step count/position.
 
 | Frame | Step | Node ID |
 |---|---|---|
@@ -126,7 +126,7 @@ Old drawer frames (`162:62`, `163:63`, `164:62`, `165:64`) were deleted and repl
 
 Reworked 2026-05-25: **converted from side-drawer to full-screen takeover wizard**, matching the Agent, MCP, and Namespace wizard style (no scrim, no parent-screen clone, no drawer). Five old drawer frames (`176:64`, `178:64`, `179:64`, `180:64`, `181:64`) were deleted; band label **"Knowledge source"** (Display/L, `text/ink`, node `182:64`) at y=3600 was preserved.
 
-Worked example: **add `acme-helpcenter` web crawl** (ties to the `kb_lookup` story thread). Five standalone full-screen frames, each hand-built on the **Takeover shell** (`88:26`) pattern: full 1440×1024 on `surface/canvas` (#faf9f5), top bar ("Add knowledge source" left in Hanken SemiBold, `Exit ✕` right), centered horizontal 5-step stepper (`① Source ② Configure ③ Test ④ Ingest ⑤ Done`, Step N of 5 — done/active dots+bars bind `brand/tide`, upcoming bind `border/hairline`), centered 720px `surface/card` content column (Shadow/Card, radius 12, 40px padding), sticky footer (ghost Cancel/Back + primary `brand/tide` button). Laid out at x = i×1540, y = 3720. All fills/text bind Paper & Signal variables by name (URLs, chunking config, counts use JetBrains Mono). No bare hex literals.
+Worked example: **add `acme-helpcenter` web crawl** (ties to the `kb_lookup` story thread). Five standalone full-screen frames, each hand-built on the **Takeover shell** (`88:26`) pattern: full 1440×1024 on `surface/canvas` (#faf9f5), top bar ("Conductor · Add knowledge source" left in Hanken SemiBold, `Exit ✕` right), centered horizontal 5-step stepper (`① Source ② Configure ③ Test ④ Ingest ⑤ Done`, Step N of 5 — done/active dots+bars bind `brand/tide`, upcoming bind `border/hairline`), centered 720px `surface/card` content column (Shadow/Card, radius 12, 40px padding), sticky footer (ghost Cancel/Back + primary `brand/tide` button). Laid out at x = i×1540, y = 3720. All fills/text bind Paper & Signal variables by name (URLs, chunking config, counts use JetBrains Mono). No bare hex literals.
 
 | Frame # | Step | Old Node ID (deleted) | New Node ID |
 |---|---|---|---|
@@ -154,7 +154,7 @@ Built 2026-05-25 (fresh, no prior drawer version). **Full-screen takeover wizard
 
 Reworked 2026-05-25: **converted from side-drawer to full-screen takeover wizard**, matching the Agent, MCP, Namespace, and KB wizard style exactly (no scrim, no parent-screen clone, no drawer). Five old drawer frames (`187:65`, `188:64`, `189:64`, `190:64`, `191:64`) were deleted; band label **"Trigger creation"** (`text/ink`, node `187:64`) at y=4840 was preserved.
 
-Worked examples: nightly **`kb-refresh` cron** (Daily `0 2 * * *`) + **`ticket-created` webhook** (`https://api.acme.dev/hooks/tj_9f3a2c`) + **Linear `issue.created` event** alt. Five standalone full-screen frames, each hand-built on the **Takeover shell** (`88:26`) pattern: full 1440×1024 on `surface/canvas`, top bar (**"Conductor · New trigger"** left in Hanken SemiBold, `Exit ✕` right, 1px `border/hairline` bottom), centered horizontal 3-step stepper (`① Type ② Configure ③ Review`, Step N of 3 — done/active dots+bars bind `brand/tide`, upcoming bind `border/hairline`), step labels below each dot, centered 720px `surface/card` content column (Shadow/Card, radius 12, 40px padding), sticky footer (ghost Back/Cancel + primary `brand/tide` button). Laid out at x = i×1540, y = 4960. Frames 2/3/5 all show step 2 active (three different Configure branches — Cron, Webhook, Event). Frame 4 shows step 3 active with steps 1–2 done. All fills/text bind Paper & Signal variables by name (cron expressions, endpoint URLs, signing secrets, topic names, filter expressions use JetBrains Mono; no bare hex literals).
+Worked examples: nightly **`kb-refresh` cron** (Daily `0 2 * * *`) + **`ticket-created` webhook** (`https://api.acme.dev/hooks/tj_9f3a2c`) + **Linear `issue.created` event** alt. Five standalone full-screen frames, each hand-built on the **Takeover shell** (`88:26`) pattern: full 1440×1024 on `surface/canvas`, top bar (**"Conductor · New trigger"** left in Hanken SemiBold, `Exit ✕` right, 1px `border/hairline` bottom), centered horizontal 3-step stepper (`① Type ② Configure ③ Review`, Step N of 3 — done/active dots+bars bind `brand/tide`, upcoming bind `border/hairline`; per-step text labels were **removed in the consistency pass** to match the other five wizards), centered 720px `surface/card` content column (Shadow/Card, radius 12, 40px padding), sticky footer (ghost Back/Cancel + primary `brand/tide` button). Laid out at x = i×1540, y = 4960. Frames 2/3/5 all show step 2 active (three different Configure branches — Cron, Webhook, Event). Frame 4 shows step 3 active with steps 1–2 done. All fills/text bind Paper & Signal variables by name (cron expressions, endpoint URLs, signing secrets, topic names, filter expressions use JetBrains Mono; no bare hex literals).
 
 | Frame # | Step / Branch | Old Node ID (deleted) | New Node ID |
 |---|---|---|---|
@@ -171,21 +171,25 @@ Worked examples: nightly **`kb-refresh` cron** (Daily `0 2 * * *`) + **`ticket-c
 - `wf_run_8c3a2f` flows 07 Runs → 08 Run Detail → 13 Trace.
 - usr_88213's duplicate-charge refund appears in 09 Chat, 18 Compliance (PII redaction), 20 Memory.
 
-## shadcn/ui-in-Figma — IN PROGRESS / BLOCKED ⛔
+## shadcn/ui-in-Figma — UNBLOCKED / SCHEDULED 🟡 (Task 8 follow-on)
 
-Goal: import *real* shadcn components into Figma and retheme to Paper & Signal (full procedure in [07](./07-shadcn-in-figma.md)).
+Goal: swap the in-place primitives for *real* shadcn components, rethemed to Paper & Signal (procedure in [07](./07-shadcn-in-figma.md)).
 
-- **Kit chosen:** Pietro Schirano "shadcn/ui Design System (Community)", duplicated by the user → **fileKey `B0cErNvwoThSCicLU3x0Fj`**.
-- **Blocker:** not yet **published as a team library** — `get_libraries` on Conductor shows it absent and `libraries_available_to_add` empty, so `importComponentByKeyAsync` can't reach it. The kit file must be in a **team project** (HSB) **and** explicitly **Published** (moving ≠ publishing).
-- **Caveat (important):** this kit is **style-based — 0 Figma variables** (uses Inter text styles + color styles + 877 icons). So even after publishing, a clean Tide/paper/Bricolage retheme is hard (per-component overrides). A **variable-based** kit (e.g. Bergmann "shadcn/ui components", `figma.com/community/file/1342715840824755935`) would retheme cleanly — recommended if fidelity-to-theme matters.
-- **Next action (user):** publish the kit (or a variable-based alternative) → paste the link → agent runs `get_libraries` → add → `search_design_system` → `importComponentByKeyAsync` → retheme → swap the in-place primitives for real components.
+- **Library added 2026-05-25 (unblocked):** the Conductor file now subscribes to **"shadcn/ui components with variables & Tailwind classes — Updated January 2026 (Community)"** (`source: team`), libraryKey `lk-1865af9ca182d391387acb06483fc2aed1f8b1676519965c9f3270f6032c7106d8f95b338fc69621d5d8ab737cf95c5e860c8ed39634af2adabf1169caf294ea`. Confirmed present via `get_libraries`.
+- **This is a variable-based kit** (Tailwind-class + Figma-variable backed) — so it can be rethemed to Tide/paper/Bricolage **cleanly**, exactly the type the earlier (style-based Pietro Schirano) kit was not. The old `B0cErNvwoThSCicLU3x0Fj` plan is superseded.
+- **Plan:** one **global swap pass** across **all 20 screens + 6 journeys** uniformly (kept consistent rather than piecemeal). Sequenced **after** the Lists-pattern workstream so it standardizes the new list components too.
+- **Procedure:** `get_libraries` (done) → `search_design_system` scoped by the libraryKey → `importComponentByKeyAsync` → retheme to Paper & Signal variables → swap in-place primitives + creation-flow primitives for real components.
 
 ## Open items / backlog
-- [ ] Publish a shadcn kit → import + retheme → swap primitives (blocked on user).
-- [ ] Extract in-place composites (App Shell, agent card, workflow node, chat bubble…) into standalone Figma component sets.
+- [x] ~~Publish/subscribe a shadcn kit~~ — DONE 2026-05-25 (variable-based kit subscribed; see shadcn section).
+- [x] ~~Setup-journey creation flows~~ — DONE (6 takeover wizards: Agent, MCP, Namespace, KB source, Trigger, Credentials).
+- [ ] **Lists pattern** (next workstream): filter bar + Blocks⇄Datatable view toggle + dual pagination (blocks = infinite scroll, datatable = numbered) sharing **one paginated datasource signature**, applied across the list screens. Own brainstorm→spec→plan→build.
+- [ ] **Global shadcn swap** (after Lists): import + retheme → swap in-place primitives across all screens + journeys.
+- [ ] **Comprehensive journey docs** (docs only): one page per macro journey covering ALL option-branches/cases + the actions needed to make each path work.
+- [ ] Extract remaining in-place composites (App Shell, agent card, workflow node, chat bubble…) into standalone Figma component sets.
 - [ ] Optional: standalone **Settings** screen (currently folded into Admin).
 - [ ] Optional: **dark mode** (Color collection is structured for a second mode).
-- [ ] Commit `docs/ui/` to git (not yet committed this session).
+- [x] ~~Commit `docs/ui/` to git~~ — docs committed incrementally this session.
 
 ## How to resume (cold start)
 1. Read this file + [README](./README.md). Figma MCP is connected as Hugo Seabra (Pro).
