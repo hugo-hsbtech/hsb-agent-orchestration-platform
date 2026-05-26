@@ -122,19 +122,21 @@ Old drawer frames (`162:62`, `163:63`, `164:62`, `165:64`) were deleted and repl
 
 **Entry point:** The `New namespace` button was **moved from the global topbar** into the **content page header** of Admin screen `57:56`, right-aligned next to the "Namespaces" heading — matching how the Agent (`23:3`, btn `25:30`) and MCP (`56:56`, btn `56:284`) journeys place their entry buttons. The content header (`57:279`) was converted to a horizontal auto-layout (`SPACE_BETWEEN`) with a left vertical stack (heading + subtitle) and the `brand/tide` button at right (node `215:92`). The button has been removed from the topbar (old node `160:2` deleted). No regression to other topbar or header content.
 
-### Knowledge source — drawer flow ✅
+### Knowledge source — takeover wizard ✅
 
-Worked example: **add `acme-helpcenter` web crawl** (ties to the `kb_lookup` story thread). Five standalone snapshots, each a **clone of the KB Management screen (`68:56`)** dimmed by a full-frame `text/ink` scrim at 40% opacity, with a right-side **Drawer** (560 wide, 1024 tall) anchored full-height at x=880. Band label **"Knowledge source"** (Display/L, `text/ink`, node `182:64`) sits above frame 1 at y=3600. Laid out at x = i×1540, y = 3720. Drawer title across all frames: "Add knowledge source". Each drawer has a hand-built 5-step compact stepper (`① Source ② Configure ③ Test ④ Ingest ⑤ Done`) advanced to the right step. All stepper chip colors and connector bars bind Paper & Signal variables by name (`brand/tide` for done/active chips and bars, `border/hairline` for upcoming — no bare hex literals). Drawer applies `DROP_SHADOW` overlay effect; fills/text bind variables by name (URLs, chunking config, counts use JetBrains Mono).
+Reworked 2026-05-25: **converted from side-drawer to full-screen takeover wizard**, matching the Agent, MCP, and Namespace wizard style (no scrim, no parent-screen clone, no drawer). Five old drawer frames (`176:64`, `178:64`, `179:64`, `180:64`, `181:64`) were deleted; band label **"Knowledge source"** (Display/L, `text/ink`, node `182:64`) at y=3600 was preserved.
 
-| Frame # | Step | Node ID |
-|---|---|---|
-| 1 | Choose source — 2-col grid of 6 Connector cards: Web crawl (SELECTED), S3, Google Drive, Notion, Upload, API · Cancel / Continue → | `176:64` |
-| 2 | Configure — Fields: Start URL `https://help.acme.com` (Mono/M) · Target collection `acme` (select) · Chunking `recursive · 800 tok · 80 overlap` (Mono/S) · Embedding model `text-embedding-3-large` (select) · Sync schedule `daily 02:00 UTC` (select) · Back / Continue → | `178:64` |
-| 3 | Test / preview — Result chip `success` "Reached help.acme.com — 1,204 pages discovered" · 3 sample doc rows (title + Mono/S URL) · Back / Start ingestion → | `179:64` |
-| 4 | Ingestion running — 4 Progress-step rows: Fetch (done, `1,204 pages`) · Chunk (done, `9,841 chunks`) · Embed (active `state/running`, `6,002 / 9,841`) · Index (pending) · Running status chip "Embedding in progress · 61% complete" · Cancel | `180:64` |
-| 5 | Indexed ✓ — Success icon · "Indexed ✓" heading · Result chip `success` "Indexed 9,841 chunks · freshness just now" · Stats: 1,204 pages · 9,841 chunks · acme collection · Done (primary) | `181:64` |
+Worked example: **add `acme-helpcenter` web crawl** (ties to the `kb_lookup` story thread). Five standalone full-screen frames, each hand-built on the **Takeover shell** (`88:26`) pattern: full 1440×1024 on `surface/canvas` (#faf9f5), top bar ("Add knowledge source" left in Hanken SemiBold, `Exit ✕` right), centered horizontal 5-step stepper (`① Source ② Configure ③ Test ④ Ingest ⑤ Done`, Step N of 5 — done/active dots+bars bind `brand/tide`, upcoming bind `border/hairline`), centered 720px `surface/card` content column (Shadow/Card, radius 12, 40px padding), sticky footer (ghost Cancel/Back + primary `brand/tide` button). Laid out at x = i×1540, y = 3720. All fills/text bind Paper & Signal variables by name (URLs, chunking config, counts use JetBrains Mono). No bare hex literals.
 
-**Entry point:** KB Management screen `68:56` already carries the primary `Add source` button in the content header at node **`68:284`** (`brand/tide` fill, white label, placed next to the "Knowledge Base" page heading — NOT the global topbar). The button **pre-existed** from the original screen build; it was not duplicated (additive check satisfied).
+| Frame # | Step | Old Node ID (deleted) | New Node ID |
+|---|---|---|---|
+| 1 | Source — 2-col grid of 6 Connector cards: Web crawl (SELECTED, teal border + `brand/tide` icon), S3, Google Drive, Notion, File upload, REST API · Cancel / Continue → | `176:64` | `223:62` |
+| 2 | Configure — Start URL `https://help.acme.com` (Mono) · Target collection `acme` (dropdown) · Chunking `recursive · 800 tok · 80 overlap` (Mono) · Embedding model `text-embedding-3-large` (dropdown) · Sync schedule `daily 02:00 UTC` (dropdown) · Back / Continue → | `178:64` | `224:62` |
+| 3 | Test & preview — Result chip `success` "Reached help.acme.com — 1,204 pages discovered" · 3 sample doc rows (title + Mono URL) · Back / Start ingestion → | `179:64` | `225:62` |
+| 4 | Ingesting — 4 Progress-step rows: Fetch (done, `1,204 pages`) · Chunk (done, `9,841 chunks`) · Embed (active/running, `6,002 / 9,841`, highlighted `surface/sunken` row) · Index (pending) · Status bar "Embedding in progress · 61%" (teal on `brand/tide-wash`) · Cancel only (running state) | `180:64` | `226:62` |
+| 5 | Indexed ✓ — All 5 stepper dots filled `brand/tide` · Result chip `success` "Indexed 9,841 chunks · freshness just now" · Stats table: Pages indexed `1,204 pages` · Chunks created `9,841 chunks` · Collection `acme` (Mono) · Freshness `just now` · Done (primary, brand/tide) | `181:64` | `227:62` |
+
+**Entry point:** KB Management screen `68:56` already carries the primary `Add source` button in the content header at node **`68:284`** (`brand/tide` fill, white label, placed next to the "Knowledge Base" page heading — NOT the global topbar). The button **pre-existed** from the original screen build and was not touched (additive check satisfied).
 
 ### Trigger creation — drawer flow ✅
 
