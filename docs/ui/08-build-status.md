@@ -9,7 +9,7 @@
 | **File** | "Conductor — Paper & Signal" |
 | **fileKey** | `wgCEx2MmeF3tGDeulGmVqI` |
 | **URL** | https://www.figma.com/design/wgCEx2MmeF3tGDeulGmVqI |
-| **Pages** | `Cover` (0:1) · `Foundations` (15:2) · `Components` (15:3) · `Screens` (23:2) · `Agent creation` (265:2) · `MCP creation` (266:2) · `Namespace creation` (267:2) · `KB source` (268:2) · `Trigger creation` (270:2) · `Credentials` (271:2) |
+| **Pages** | `Cover` (0:1) · `Foundations` (15:2) · `Components` (15:3) · `Screens` (23:2) · `Agent creation` (265:2) · `MCP creation` (266:2) · `Namespace creation` (267:2) · `KB source` (268:2) · `Trigger creation` (270:2) · `Credentials` (271:2) · `Lists pattern` (278:2) |
 
 ## Design system — DONE ✅ (Foundations page 15:2)
 
@@ -33,6 +33,10 @@ Built as proper Figma **component sets with variants** (themed to Paper & Signal
 | **Result chip** | `89:46` | success (`89:37`) · error (`89:40`) · pending (`89:43`) |
 | **Connector card** | `91:49` | Selected=false (`91:37`) · Selected=true (`91:43`) |
 | **Progress-step row** | `92:48` | done (`92:37`) · active (`92:41`) · pending (`92:45`) |
+| **FilterBar** | `280:37` | single — vertical on `surface/card`, hairline bottom border, full-width. Row 1 (space-between): LEFT = Search field (`surface/sunken`, radius 8) + facet dropdowns Status (`brand/tide-wash` count badge `2`)/Provider/Owner (`▾`, Label/S, radius 8); RIGHT = Sort control (`⇅ Sort: Updated`) + **ViewToggle instance** slot (`284:41`). Row 2 (wraps): removable `brand/tide-wash` chips ("Status: Production ✕", "Provider: Claude ✕") + "Clear all" `brand/tide` text button |
+| **ViewToggle** | `279:67` | View=Blocks (`279:65`) · View=Table (`279:66`) — segmented control; active segment `brand/tide` fill + `text/on-brand`, inactive `text/muted` on `surface/card`; grid / rows icons |
+| **BlockGrid sentinel** | `285:70` | State=loading-more (`285:68`, 3 `surface/sunken` skeleton cards radius 12 + "Loading more…" Label/S `text/muted`) · State=end (`285:69`, centered hairline rule + "End of list · 240 items" Label/S `text/faint`). Companion **count** text `Showing 24 of 240` (Mono/S `text/muted`) at `285:71` |
+| **DataTable + Pager** | `286:50` | single — dense table matching Runs/Namespaces proportions. Header `surface/sunken`, sortable Label/S column labels (active AGENT = `brand/tide-text` + `▾` caret); 6 dense rows (Body/S; Mono/S machine values) each with a **Version State Badge `20:23`** + **Provider Chip `21:14`** instance. Footer (`289:74`, space-between): left `Rows per page [20 ▾]`; center `1–20 of 240` (Mono/S `text/muted`); right numbered pager `‹ 1 2 3 … 12 ›` (current page `brand/tide` fill + `text/on-brand`, others `text/muted`, chevrons hairline buttons) |
 
 ### Creation-flow component sets (Task 0 — Journeys foundation)
 
@@ -185,7 +189,7 @@ Goal: swap the in-place primitives for *real* shadcn components, rethemed to Pap
 ## Open items / backlog
 - [x] ~~Publish/subscribe a shadcn kit~~ — DONE 2026-05-25 (variable-based kit subscribed; see shadcn section).
 - [x] ~~Setup-journey creation flows~~ — DONE (6 takeover wizards: Agent, MCP, Namespace, KB source, Trigger, Credentials).
-- [ ] **Lists pattern** (next workstream): filter bar + Blocks⇄Datatable view toggle + dual pagination (blocks = infinite scroll, datatable = numbered) sharing **one paginated datasource signature**, applied across the list screens. Own brainstorm→spec→plan→build.
+- [ ] **Lists pattern** (in progress): filter bar + Blocks⇄Datatable view toggle + dual pagination (blocks = infinite scroll, datatable = numbered) sharing **one paginated datasource signature**, applied across the list screens. **Task L0 DONE 2026-05-25** — reusable constructs built on the Components page (`FilterBar` `280:37`, `ViewToggle` `279:67`, `BlockGrid sentinel` `285:70`, `DataTable + Pager` `286:50`) + the new `Lists pattern` page (`278:2`) for later applied/state frames. Remaining: apply across list screens.
 - [ ] **Global shadcn swap** (after Lists): import + retheme → swap in-place primitives across all screens + journeys.
 - [ ] **Comprehensive journey docs** (docs only): one page per macro journey covering ALL option-branches/cases + the actions needed to make each path work.
 - [ ] Extract remaining in-place composites (App Shell, agent card, workflow node, chat bubble…) into standalone Figma component sets.
