@@ -111,3 +111,31 @@ Side-by-side, the rethemed shadcn components are visually indistinguishable from
 - Pilot page: **`shadcn pilot`** = node `364:2`.
 - Clone of Agent Catalogue: `364:3` (original `23:3` confirmed untouched).
 - Swapped instance IDs: New agent button `377:73`; topbar Input `380:67`; badges `383:111`/`383:114`/`383:117`/`383:120`; ViewToggle Tabs `386:280`.
+
+## P1 — rethemed shadcn primitives (2026-05-26)
+
+P1 of the **partial swap**: formalized the 4 worth-swapping atoms into **canonical local components** on the Components page (`15:3`), in a new **"shadcn × Paper & Signal"** band (below the existing component shelf, starting y≈3600). Each wraps the pilot's real-shadcn atom (cloned from the pilot page `364:2`, then detached/componentized) and is fully rethemed to Paper & Signal. The bespoke Version State Badge (`20:23`) and all canonical Screens/journey frames were left untouched (P2 owns those).
+
+### Component node IDs
+| Component | Node ID | Notes |
+|---|---|---|
+| **Button (shadcn·P&S)** | set `392:77` | variants: `Variant=primary` `391:79` · `Variant=secondary` `392:74` |
+| **Input (shadcn·P&S)** | `393:94` | single component, generic text field (search icon removed) |
+| **Badge (shadcn·P&S)** | set `396:74` | 7 variants — see below |
+| **Segmented (shadcn·P&S)** | `398:81` | 2-segment (Blocks/Table) from the kit Tabs atom |
+
+Badge variant IDs: `State=draft` `395:74` · `State=staging` `395:78` · `State=canary` `395:82` · `State=production` `394:83` · `State=running` `395:86` · `State=error` `395:90` · `State=paused` `395:94`.
+
+### Retheme method — same per-instance approach the pilot proved, now made canonical
+Confirmed again: `importComponentByKeyAsync` works, but the kit's variables stay **remote/read-only**, so retheming is **per-instance paint re-binding** to our P&S variables (`figma.variables.setBoundVariableForPaint`), **plus** the two fixes the pilot flagged:
+1. **Paint re-bind** — every fill/stroke/text fill bound by name to a P&S variable (`brand/tide`, `text/on-brand`, `text/ink`, `text/muted`, `text/faint`, `surface/card`, `surface/sunken`, `border/hairline`, `state/*` + `state/*-wash`, `radius/md`). No bare hex, no leftover kit colors.
+2. **Font override** — every text node forced to **Hanken Grotesk** (SemiBold for button/badge/segment labels, Regular for the input placeholder); band title uses **Bricolage Grotesque SemiBold** (display register). The pilot's leftover **Inter** is gone.
+3. **Hug / sizing fix** — Button height normalized to 36 + radius 8 (pilot was 32); Input 280×36 radius 8; Segmented track radius 8 (kit shipped 10); Badge built to hug (pad `[4,10,4,8]`, gap 6, radius full) with a **dot ellipse** added so it mirrors the bespoke Version State Badge (the kit Badge had no dot).
+
+Rather than re-import-and-extract from keys (fragile detach-and-lift), P1 **cloned the pilot's already-extracted atoms** as the starting point (permitted reuse), then `detachInstance()` / `createComponentFromNode()` to turn them into clean **local** COMPONENT/COMPONENT_SET nodes — so they no longer point at the remote kit and can't drift when the kit updates.
+
+### Theme-correctness — verified clean
+Screenshotted each component (and the whole band). Confirmed: warm-paper surfaces, Tide accent on the primary button + active segment, Hanken type throughout, correct per-state badge colors. A programmatic audit of all 4 components returned **zero issues** — no non-P&S fonts, no unbound text fills, no bare solid fills. No kit-blue, no Inter, no wrapping, no 100×100 artifacts. The Badge set is visually identical to the bespoke Version State Badge (`20:23`) — same dot+label, wash fill, state-colored text; only the label string differs (`Error` here vs the bespoke `Failed`, per the task's variant naming).
+
+### Effort signal for P2 rollout
+Each atom took ~1 short scripted pass (clone → detach → componentize → re-bind paints → font override → sizing fix → verify). The genuinely-atomic primitives (Input, Badge, extracted Button/Tabs) are now **canonical and reusable** — P2 can instance these instead of re-rethemeing per screen, which collapses the per-instance grind for these four. The standing caveats hold: composites (Card etc.) are still not worth swapping, and a true variable remap still requires the (d) fork-and-republish path. Net: P1 removes the override cost for the four atoms across the screen set; P2's remaining work is swapping screen instances to these local components.
