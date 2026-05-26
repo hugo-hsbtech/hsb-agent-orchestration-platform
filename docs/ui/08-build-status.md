@@ -131,15 +131,23 @@ Worked example: create top-level **chatbot `acme-concierge`** (router, draft `v0
 | 7 | Review & Create | `106:317` | 9240 |
 | **8** | **Agent · Created (chatbot draft)** — NEW | **`476:72`** | **10780** |
 
-#### Row 2 frame list (y=1400)
+#### Row 2 frame list (y=1400) — full workflow path ✅ batch 2 2026-05-26
 
-| Frame | Step | Node ID | x |
-|---|---|---|---|
-| 1 | Workflow tail — Triggers picker (Step 4 of 4) — RELOCATED from Row 1 | `106:333` | 0 |
+Worked example: create top-level **workflow `refund-workflow`** (matches the catalogue's Refund Workflow; `agent.flow.refund`), draft `v0.1`, Manual trigger. The four new takeover-wizard frames (W2–W5) extend the relocated Triggers frame into the complete workflow tail: **Triggers → Steps → Budget → Review → Created**. All 1440×1024 on the Takeover-shell pattern (top bar `Conductor · New agent` + `Exit ✕`, hairline-bottom; centered horizontal stepper, dots+bars done=`brand/tide` / upcoming=`border/hairline` + `Step N of 7` label, no per-step text). All fills/text bind Paper & Signal variables by name (verified: 0 unbound text fills in W2, root fills variable-bound, no 100×100 artifacts); machine register (step-type names, token/cost numbers, ids, version) uses JetBrains Mono. State colors only for state (step-type tags in the graph reuse the builder's `state/*` tag palette to echo `35:34`).
 
-**Entry point:** Agent Catalogue `23:3` → `New agent` button (`25:30`). The workflow tail's `Create draft & open builder` implies handoff to Workflow editor (`35:34`).
+The workflow stepper was extended **4 → 7 dots** to carry the new tail: Type · Identity · Model · Triggers · Steps · Budget · Review. (The relocated Triggers frame `106:333` still reads "Step 4 of 4" — a known minor inconsistency vs. the new 7-dot tail; left as-is since it predates this batch and the consistency pass will reconcile steppers globally.)
 
-Steppers: chatbot frames show 1→7 of 7; Created frame shows all-7 teal (Step 7 of 7); workflow tail shows 4-step path (Step 4 of 4). All text binds Paper & Signal styles by name; machine register uses JetBrains Mono.
+| Frame | Step | Node ID | x | Stepper |
+|---|---|---|---|---|
+| 1 | Workflow tail — Triggers picker (Manual/Cron/Webhook/Event) — RELOCATED from Row 1 | `106:333` | 0 | Step 4 of 4 (pre-batch) |
+| **W2** | **Workflow steps** — wide split body: node-graph preview (`llm_call → branch → {tool_call, mcp_call} → transform`) on a faint dotted-grid `surface/sunken` canvas in the builder node style (reused from `35:34`); RIGHT step-type palette listing all **13 step types** (Mono/S names) with one-line purpose each — `llm_call`/`tool_call`/`mcp_call`/`transform`/`fetch ⚠`(soft-deprecated, `state/canary` warning)/`noop`/`agent_call`/`parallel`/`for_each`/`branch`/`switch`/`while`/`until`. Footer note "Authored in the Visual Builder (#02)" + Back / Continue → | **`487:76`** | **1540** | Step 5 of 7 |
+| **W3** | **Budget** ([AD-32]) — centered card: `max_total_tokens` `200,000` (Mono), `max_estimated_cost_usd` `$5.00` (Mono), **on_exceeded** segmented control `cancel`(selected) / `warn_and_continue` / `cancel_with_partial_output`; helper note "Per-run budget is workflow-only — chatbots use namespace daily quota + per-turn max_tokens." + Back / Continue → | **`495:76`** | **3080** | Step 6 of 7 |
+| **W4** | **Review & create** — centered card, two-column summary (Type `workflow` · Identity `refund-workflow` ns `acme` · Model Claude `claude-sonnet-4-6` ‖ Trigger `Manual` · Budget `200k tok / $5.00 · cancel` · Steps `6 steps`); right rail = **Version State Badge `20:23` Draft instance** + `refund-workflow v0.1` (Mono). Footer primary **`Create draft & open builder`** + secondary Back | **`499:76`** | **4620** | Step 7 of 7 |
+| **W5** | **Created → open builder** — success frame (mirrors chatbot Created `476:72`): teal `brand/tide-wash` check circle + "Workflow draft created" + **Draft badge `20:2` instance** + `refund-workflow v0.1` (Mono) + note "Define steps in the Visual Builder; promote draft → production to run." Footer secondary `Back to Catalogue` + primary **`Open in Visual Builder`** (handoff to `35:34`) | **`504:80`** | **6160** | Step 7 of 7 (all done) |
+
+**Entry point:** Agent Catalogue `23:3` → `New agent` button (`25:30`). The workflow tail hands off to the Visual Workflow Builder (`35:34`) via W4's `Create draft & open builder` and W5's `Open in Visual Builder`.
+
+Steppers: chatbot frames show 1→7 of 7; chatbot Created shows all-7 teal (Step 7 of 7); workflow Triggers `106:333` still 4-step (pre-batch); the workflow tail W2–W5 use the extended 7-dot path (Steps=5, Budget=6, Review=7, Created=all done). All text binds Paper & Signal styles by name; machine register uses JetBrains Mono.
 
 ### MCP creation — takeover wizard ✅ (page 266:2)
 
