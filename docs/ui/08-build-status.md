@@ -93,19 +93,19 @@ Worked example: create top-level **chatbot `acme-concierge`** (router, draft `v0
 
 Steppers: chatbot frames show 1→7 of 7; the workflow tail shows the shorter 4-step path (Type · Identity · Model · Triggers, step 4 of 4). All text binds Paper & Signal styles by name; the machine register (IDs, slug, numbers, model name, router prompt) uses JetBrains Mono (Mono/M, Mono/S).
 
-### MCP creation — drawer flow ✅
+### MCP creation — takeover wizard ✅
 
-Worked example: **add the Linear MCP via OAuth**. Five standalone snapshots, each a **clone of the Tool & MCP Catalogue screen (`56:56`)** dimmed by a full-frame `text/ink` scrim at 40% opacity, with a right-side **Drawer shell** (Size=560, instanced from `87:14` then detached) anchored full-height. Band label **"MCP creation"** (Display/L, `text/ink`, node `128:56`) sits above frame 1. Laid out at x = i×1540, y = 1240. Drawer title across all frames: "Add MCP". Each drawer's stepper slot is rebuilt as a 5-step compact stepper (`① Connect ② Auth ③ Discover ④ Test ⑤ Register`) advanced to the right step. Drawer applies Shadow/Overlay; all fills/text bind Paper & Signal variables/styles by name (machine register — URLs, env keys, tool IDs, latency, name/version — uses JetBrains Mono).
+Worked example: **add the Linear MCP via OAuth**. Reworked from the old side-drawer flow into a **full-screen takeover wizard** matching the Agent-creation journey (one consistent creation style — no drawers, no scrim, no parent-screen clone). Five standalone frames, each a hand-built copy of the **Takeover shell** (`88:26`): full 1440×1024 on `surface/canvas`, top bar (`Conductor · Add MCP` left, `Exit ✕` right), a centered horizontal 5-step stepper (`① Connect ② Auth ③ Discover ④ Test ⑤ Register` — `Step N of 5`; done/active dots+bars bind `brand/tide`, upcoming bind `border/hairline`), a centered 720px `surface/card` content column (Shadow/Card, radius 12), and a sticky footer (ghost Back/Cancel + primary `brand/tide` button). Band label **"MCP creation"** (Display/L, `text/ink`, node `128:56`) is unchanged above frame 1. Laid out at x = i×1540, y = 1240. All fills/text bind Paper & Signal variables/styles by name (machine register — URLs, env keys, tool IDs, latency, name/version — uses JetBrains Mono); the Result chip instances the shared `89:46` component.
 
 | Frame | Step | Node ID |
 |---|---|---|
-| 1 | Connect — Transport (SSE selected) · Server URL `https://mcp.linear.app/sse` · Env `LINEAR_WORKSPACE=acme` · Namespace `acme` · Cancel/Connect → | `128:57` |
-| 2 | Auth — OAuth handoff "Connect to Linear" · brand/tide Authorize · Result chip `pending` "Waiting for authorization…" · Back/Continue (disabled) | `142:56` |
-| 3 | Discover — Result chip `success` "Connected as acme" · checklists Tools (`create_issue`,`search_issues`,`add_comment`) / Resources (`issue://`,`team://`) / Prompts (`triage_issue`), all checked | `143:68` |
-| 4 | Test — sample call `search_issues({"query":"refund"})` in a `surface/sunken` well · Result chip `success` + latency `412ms` | `144:80` |
-| 5 | Register / Done — summary Name `linear` · Version `1.0` · Scope `acme` · Auth `state/production` Connected chip · primary Register MCP | `145:92` |
+| 1 | Connect — Transport (SSE selected) · Server URL `https://mcp.linear.app/sse` · Env `LINEAR_WORKSPACE=acme` · Namespace `acme` · Cancel/Continue → | `198:58` |
+| 2 | Auth — OAuth handoff "Connect to Linear" · brand/tide Authorize · Result chip `pending` "Waiting for authorization…" · Back/Continue (disabled) | `201:58` |
+| 3 | Discover — Result chip `success` "Connected as acme" · checklists Tools (`create_issue`,`search_issues`,`add_comment`) / Resources (`issue://`,`team://`) / Prompts (`triage_issue`), all checked | `202:60` |
+| 4 | Test — sample call `search_issues({"query":"refund"})` in a `surface/sunken` well · Result chip `success` + latency `412ms` | `203:62` |
+| 5 | Register — summary Name `linear` · Version `1.0` · Scope `acme` · Auth `state/production` Connected chip · stepper fully filled · primary Register MCP | `204:64` |
 
-**Entry point:** Tool & MCP Catalogue `56:56` already carries the primary `Add MCP` button in its content header (`brand/tide` fill at node **`56:284`**, label `56:288`) → launches this drawer flow. The button **pre-existed** from the screen build; it was *not* duplicated (additive check satisfied). The dimmed catalogue behind each frame keeps its existing cards (the Linear MCP card `56:369` is already present), so no new card is injected.
+**Entry point:** Tool & MCP Catalogue `56:56` already carries the primary `Add MCP` button in its content header (`brand/tide` fill at node **`56:284`**, label `56:288`) → launches this takeover wizard. The button **pre-existed** from the screen build and was left untouched; it was *not* duplicated (additive check satisfied). The takeover replaces the screen, so there is no parent-screen clone or scrim behind these frames (a change from the old drawer flow). The 5 old drawer frames (`128:57`, `142:56`, `143:68`, `144:80`, `145:92`) were deleted.
 
 ### Namespace creation — drawer flow ✅
 
