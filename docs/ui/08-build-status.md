@@ -80,7 +80,7 @@ Laid out left→right at x = index × 1540. One shared **acme-support** customer
 
 Six multi-step **takeover-wizard** creation/onboarding flows, all unified on one style (the Agent-creation wizard): full-screen `surface/canvas` frame, top bar `Conductor · {flow}` + `Exit ✕`, centered horizontal stepper (`Step N of M`, no per-step text labels), centered ~720px `surface/card` content column (Shadow/Card, radius 12), sticky footer (ghost Back/Cancel + primary `brand/tide`). No side-drawers, scrims, or parent-screen clones — an earlier side-drawer approach for five of the journeys was **reworked to takeover** for consistency (per user direction, 2026-05-25). They compose the reusable creation-flow primitives (Stepper/Takeover shell, Connector card, Result chip, Progress-step row) plus Version State Badge / Provider Chip, over the same **acme** customer-support story. Each frame is 1440×1024 with a Display/L band label. *(The `Drawer shell` `87:30` and the Stepper `Drawer/Compact` variant `84:2` from Task 0 are now unused — retained for possible future use.)*
 
-### Agent creation — 4-band layout (page 265:2) — batch 3 ✅ 2026-05-26
+### Agent creation — 4-band layout (page 265:2) — **BUILD COMPLETE** ✅ 2026-05-26 (batches 1–4)
 
 **Page expanded to 4 bands** (batch 1 of N). The original 7-step chatbot spine + workflow-tail frame has been reorganized into a multi-band canvas. Band labels are Display/L, `text/ink`, using Bricolage Grotesque SemiBold.
 
@@ -91,7 +91,7 @@ Six multi-step **takeover-wizard** creation/onboarding flows, all unified on one
 | 1 · Happy path — Chatbot | `473:72` | y=70 | 7 existing chatbot wizard frames + new Created frame (y=120) |
 | 2 · Workflow path | `473:73` | y=1280 | Workflow tail `106:333` relocated to (x=0, y=1400) |
 | 3 · Chatbot — branch variants | `473:74` | y=2560 | 4 variant frames (y=2680) — batch 3 ✅ |
-| 4 · Edge cases & validation | `473:75` | y=3840 | (empty — future batches) |
+| 4 · Edge cases & validation | `473:75` | y=3840 | 5 edge-case frames (y=3960) — batch 4 ✅ |
 
 #### Batch 1 changes
 
@@ -159,6 +159,20 @@ Four non-default branch variant frames for the chatbot wizard tail. All 1440×10
 | **V2** | **Routing · rule-based + low-confidence** — amber design-assumption banner (⚠ "Design assumption — Rule-based routing maps to a planned strategy…"); strategy segmented `LLM classifier / Rule-based` with **Rule-based** selected; keyword→specialist rule rows (`"refund|charge" → payments`, `"login|error" → technical`, `else → knowledge`) in JetBrains Mono; low-confidence segmented `ask_clarification` (selected) / `route_to_default`; confidence threshold label "0.50" + teal slider at 50%. | **`515:84`** | **1540** | Step 4 of 7 |
 | **V3** | **Knowledge & Memory · minimal** — KB: OFF toggle + muted "Answers from the model only — no knowledge base attached."; Working memory strategy segmented `sliding / summarize / semantic` with **summarize** selected + red error banner "summarize requires a summary_agent — none selected" + required `summary_agent` select with red border; Episodic OFF (muted descriptor "requires stable user_id"); Semantic OFF (muted descriptor "requires user_profiles table"). | **`516:84`** | **3080** | Step 5 of 7 |
 | **V4** | **Safety · webhook handoff** — Standard moderation, PII toggle ON; blocked topics `legal advice` + `competitor pricing`; human handoff segmented `message / webhook / ticket` with **webhook** selected + `https://acme.app/handoff` mono URL input + helper "On non-2xx: retries 3× then falls back to a message (escalation_outcome: webhook_failed_fallback)"; Degraded message textarea shown. | **`517:84`** | **4620** | Step 6 of 7 |
+
+#### Row 4 frame list (y=3960) — Edge cases & validation ✅ batch 4 2026-05-26
+
+Five failure/empty/warning state frames covering every failure mode in the Failure-state summary table. All 1440×1024, takeover-wizard pattern (top bar `Conductor · New agent` + `Exit ✕`, 7-dot teal stepper, centered 720px `surface/card` content column Shadow/Card radius 12, sticky footer). Token approach: **`state/error-wash` and `state/canary-wash` BOTH EXIST** in the design system and are bound directly — no bare hex, no `surface/sunken` fallback needed. `state/error` and `state/canary` bound to icon/dot/text/stroke on semantic elements. `state/error-wash` (#fbeaea) used as background on E1 error rows, E3 banner, E4 banner. `state/canary-wash` (#fbf1dc) used as background on E5 warning banner. `state/error` bound to banner stroke + dot + title text on blocking errors; `state/canary` bound on non-blocking warning.
+
+| Frame | State | Node ID | x | Step |
+|---|---|---|---|---|
+| **E1** | **Validation · collect-all errors** — Review step blocked. Heading "Fix 4 issues before creating"; subtitle "Validation reports every issue at once…"; 4 error rows on `state/error-wash` bg (dot + error message + "Step: X · Jump to step →" teal): Name collision (Identity) / Provider grok (Model) / Specialist not in production (Routing) / Unknown tool (Workflow body). Footer: Back + disabled Create (`surface/sunken`). | **`524:84`** | **0** | Step 7 of 7 |
+| **E2** | **Empty · no specialists** — Routing step (router mode) with no production specialists. Router/Single specialist segmented (Router selected, `brand/tide-wash`). Empty state: `surface/sunken` illustration rect + "No specialists to route to" (Bricolage H2) + descriptor text + "Create a specialist" (`brand/tide`) + "Switch to single specialist" (ghost). Footer: Back + disabled Continue. | **`524:148`** | **1540** | Step 4 of 7 |
+| **E3** | **Empty · no verified credential** — Model step, Claude provider selected but no verified key. Claude chip (`brand/tide-wash`, tide border). `state/error-wash` banner (red dot + "No verified credential for Claude in acme" + "A verified provider key is required…"). "Add credential → J6 / Admin" CTA (`brand/tide`). Divider + dimmed Model field `claude-sonnet-4-6`. Footer: Back + disabled Continue. | **`524:191`** | **3080** | Step 3 of 7 |
+| **E4** | **Quota hit · max_agents** — Identity step blocked by namespace agent quota. `state/error-wash` banner "Namespace agent limit reached — 25 / 25 agents in acme" + body text. Full-width quota meter track (`surface/sunken`) with 100% `state/error` fill bar + label row "AGENTS (max_agents quota)" + "25 / 25" in `state/error` mono. Dimmed (opacity 0.5) Name field `acme-concierge`. "Manage namespace quota → J3 / Admin" CTA (`brand/tide`). Footer: Back + disabled Continue. | **`524:237`** | **4620** | Step 2 of 7 |
+| **E5** | **Warning · KB collection empty** — Knowledge & Memory step, `acme-helpcenter` attached but not ingested. KB selector field showing `acme-helpcenter`. `state/canary-wash` warning banner (amber dot + "Collection 'acme-helpcenter' has 0 indexed vectors" in `state/canary` + "Attaching is valid, but lookups return no hits…"). Divider + Memory section (Working on · Episodic off · Semantic off). In-card CTAs: "Continue anyway" (`brand/tide`) + "Ingest a source" (ghost). Footer: Back + enabled "Continue anyway" (`brand/tide`). Non-blocking: agent CAN be created. | **`524:284`** | **6160** | Step 5 of 7 |
+
+**Agent journey full build complete — all 4 bands, 25 frames total (Row 1: 8 frames · Row 2: 5 frames · Row 3: 4 frames · Row 4: 5 frames + the relocated workflow trigger `106:333`).**
 
 ### MCP creation — takeover wizard ✅ (page 266:2)
 
