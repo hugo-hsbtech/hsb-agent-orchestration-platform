@@ -88,7 +88,7 @@ Six multi-step **takeover-wizard** creation/onboarding flows, all unified on one
 
 | Band | Label node | y-position | Content |
 |---|---|---|---|
-| 1 · Happy path — Chatbot | `473:72` | y=70 | 7 existing chatbot wizard frames + new Created frame (y=120) |
+| 1 · Chatbot — end to end (create → configure → ready) | `473:72` | y=70 | 7 wizard frames + Definition (DSL) + Created + Validate ✓ + Promote + Live (y=120) — **band label renamed 2026-05-26**; see end-to-end tail below |
 | 2 · Workflow path | `473:73` | y=1280 | Workflow tail `106:333` relocated to (x=0, y=1400) |
 | 3 · Chatbot — branch variants | `473:74` | y=2560 | 4 variant frames (y=2680) — batch 3 ✅ |
 | 4 · Edge cases & validation | `473:75` | y=3840 | 5 edge-case frames (y=3960) — batch 4 ✅ |
@@ -129,7 +129,28 @@ Worked example: create top-level **chatbot `acme-concierge`** (router, draft `v0
 | 5 | Knowledge & Memory | `106:285` | 6160 |
 | 6 | Safety | `106:301` | 7700 |
 | 7 | Review & Create | `106:317` | 9240 |
-| **8** | **Agent · Created (chatbot draft)** — NEW | **`476:72`** | **10780** |
+| **8** | **Definition — the agent is data (DSL)** — NEW (batch 5) | **`538:84`** | **10780** |
+| **9** | **Agent · Created (chatbot draft)** — RELOCATED 10780 → 12320 (batch 5) | **`476:72`** | **12320** |
+| **10** | **Validation passed (Validate ✓)** — NEW (batch 5) | **`547:84`** | **13860** |
+| **11** | **Promote (Promotion Lane)** — NEW (batch 5) | **`547:122`** | **15400** |
+| **12** | **Live / serving** (READY terminal) — NEW (batch 5) | **`547:160`** | **16940** |
+
+#### Chatbot end-to-end tail ✅ batch 5 2026-05-26 — Definition (DSL) + validate/promote/live
+
+Completes the Row 1 chatbot journey so it reads **create → configure → see the data (DSL) → validate ✓ → promote → live**. All frames 1440×1024 on the Takeover-shell pattern (top bar `Conductor · New agent` + `Exit ✕`). All fills/text bind Paper & Signal variables by name (verified via `get_variable_defs` on `547:122` — only named tokens `state/*`, `state/*-wash`, `surface/*`, `text/*`, `border/hairline`, `brand/tide*`; no bare hex). Machine register (DSL JSON, version, metrics, split %) uses JetBrains Mono. State colors used only for state.
+
+**Band-label rename:** Row 1 band label `473:72` changed from `1 · Happy path — Chatbot` → **`1 · Chatbot — end to end (create → configure → ready)`**.
+
+**Created relocation:** the existing Created frame `476:72` moved from x=10780 → **x=12320** to make room for the new Definition frame at x=10780.
+
+**Lifecycle indicator (replaces wizard stepper on the ready-phase tail):** the Validate/Promote/Live frames swap the 7-dot wizard stepper for a **version-lifecycle indicator** — pills `Draft → Staging → Canary → Production` using Version-State-Badge styling and `state/*` colors. Active stage = wash-filled pill + colored dot/label; reached stages = colored dot/label; future stages = `border/hairline` dot + `text/faint` label; connector arrows `→`. This signals the transition from "creating" (wizard steps) to "promoting → ready" (lifecycle). Validate = Draft active; Promote = Canary active; Live = Production active (complete).
+
+| Frame | Node ID | x | Lifecycle | Key content |
+|---|---|---|---|---|
+| **Definition (DSL)** | `538:84` | 10780 | (final wizard step — keeps 7-dot stepper, Step 7 of 7) | Heading "Definition — the agent is data"; caption "The wizard produced this DSL; it's the source of truth. The Visual Builder and screens are views over it."; `✓ Validates · 0 errors` chip (`state/production` on `state/production-wash`); `surface/sunken` Mono code well (`542:84`/`542:85`) with the full **acme-concierge DSL JSON** (`agent_type: "chatbot"`, `model_config{provider:"claude", model:"claude-opus-4-7", temperature:0.3}`, `routing{specialists:[payments,technical,knowledge], default_specialist:"knowledge", confidence_threshold:0.72, low_confidence_action:"route_to_default"}`, `knowledge_base{collection:"acme", retrieval_strategy:"hybrid", top_k:6}`, `memory{working/episodic(lookback_days:30)/semantic}`, `safety{moderation:"standard", pii_redaction:true}`). Footer `Back` / `Create as draft`. |
+| **Validate ✓** | `547:84` | 13860 | Draft active | Heading "Validation passed"; green ✓ circle (`state/production-wash`); subtitle "…0 errors — all checks resolve. Ready to promote."; `surface/sunken` checklist (`550:92`) of 5 passed checks (each green ✓): provider configured & allow-listed (claude) · specialists resolve & in production · references resolve · routing contract OK (emits confidence, 0.72) · KB collection indexed (acme · 9,841 chunks). Contrasts the edge-case error frame `524:84` ([AD-13] collect-all). Footer `Back` / `Promote →`. |
+| **Promote (lane)** | `547:122` | 15400 | Canary active | **Promotion Lane** (mirrors Version Promotion screen `48:40`): heading "Promote acme-concierge `v1.0`"; 4 stage cards (`555:88`) Draft `v1.0`/Staging `v1.0`/**Canary `v1.0`** (amber `state/canary-wash`+stroke, active)/Production `v0.9`; **canary traffic-split bar** (`556:88`/`556:92`) v1 10% (`state/canary`) / v0 90% (`state/production`); promotion-gate chips (`556:97`): ✓ eval gate 4.6/5 ≥ 4.0 · ✓ error-rate gate 0.2% < 2% · ↻ auto-rollback armed. Footer `Back` / `Promote to production`. |
+| **Live / serving** | `547:160` | 16940 | Production active (complete) — READY terminal | Heading "Live"; green icon; **Version State Badge Production instance** (`560:91`, from `20:11`); `acme-concierge v1.0` (Mono); "Serving production traffic · routing live"; stats card (`561:88`): `1,284` TURNS TODAY · `840 ms` P50 LATENCY (Mono); links `View in Chat` (`54:56`) · `Analytics` (`59:56`) in `brand/tide-text`. Footer `Back to Catalogue` / `Done`. |
 
 #### Row 2 frame list (y=1400) — full workflow path ✅ batch 2 2026-05-26
 
