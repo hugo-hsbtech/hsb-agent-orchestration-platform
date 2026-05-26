@@ -21,7 +21,10 @@ Answering that honestly required reading the **entire** doc set — not just the
 | [05-build-workflow.md](./05-build-workflow.md) | The Figma-only build workflow: design system → screens → shadcn-in-Figma, and "done" criteria. No code. |
 | [06-learnings.md](./06-learnings.md) | What this trial taught us — about the platform, the process, and the gaps. |
 | [07-shadcn-in-figma.md](./07-shadcn-in-figma.md) | How to bring real shadcn/ui components into Figma (no code) and theme them to Paper & Signal. |
-| **[08-build-status.md](./08-build-status.md)** | **Start here to resume.** What actually exists now (Figma file/page/node IDs, design system, all 20 screens), shadcn status, open items, and cold-start instructions. |
+| **[08-build-status.md](./08-build-status.md)** | **Start here to resume.** What actually exists now (Figma file/page/node IDs, design system, all 20 screens + 6 journey pages + Lists pattern), shadcn status, open items, and cold-start instructions. |
+| [09-consistency-contract.md](./09-consistency-contract.md) | The Screens↔flows consistency contract every per-flow page must satisfy + the verification checklist. |
+| [journeys/](./journeys/) | Per-journey docs covering the **complete** decision tree (all branches/options) + the real actions required to make each path work. |
+| [patterns/lists.md](./patterns/lists.md) | The reusable Lists pattern: filter bar + Blocks⇄Datatable toggle + dual pagination + the shared pagination contract. |
 
 ## Decisions locked for this trial
 
