@@ -80,7 +80,7 @@ Laid out left→right at x = index × 1540. One shared **acme-support** customer
 
 Six multi-step **takeover-wizard** creation/onboarding flows, all unified on one style (the Agent-creation wizard): full-screen `surface/canvas` frame, top bar `Conductor · {flow}` + `Exit ✕`, centered horizontal stepper (`Step N of M`, no per-step text labels), centered ~720px `surface/card` content column (Shadow/Card, radius 12), sticky footer (ghost Back/Cancel + primary `brand/tide`). No side-drawers, scrims, or parent-screen clones — an earlier side-drawer approach for five of the journeys was **reworked to takeover** for consistency (per user direction, 2026-05-25). They compose the reusable creation-flow primitives (Stepper/Takeover shell, Connector card, Result chip, Progress-step row) plus Version State Badge / Provider Chip, over the same **acme** customer-support story. Each frame is 1440×1024 with a Display/L band label. *(The `Drawer shell` `87:30` and the Stepper `Drawer/Compact` variant `84:2` from Task 0 are now unused — retained for possible future use.)*
 
-### Agent creation — 4-band layout (page 265:2) — batch 1 ✅ 2026-05-26
+### Agent creation — 4-band layout (page 265:2) — batch 3 ✅ 2026-05-26
 
 **Page expanded to 4 bands** (batch 1 of N). The original 7-step chatbot spine + workflow-tail frame has been reorganized into a multi-band canvas. Band labels are Display/L, `text/ink`, using Bricolage Grotesque SemiBold.
 
@@ -90,7 +90,7 @@ Six multi-step **takeover-wizard** creation/onboarding flows, all unified on one
 |---|---|---|---|
 | 1 · Happy path — Chatbot | `473:72` | y=70 | 7 existing chatbot wizard frames + new Created frame (y=120) |
 | 2 · Workflow path | `473:73` | y=1280 | Workflow tail `106:333` relocated to (x=0, y=1400) |
-| 3 · Chatbot — branch variants | `473:74` | y=2560 | (empty — future batches) |
+| 3 · Chatbot — branch variants | `473:74` | y=2560 | 4 variant frames (y=2680) — batch 3 ✅ |
 | 4 · Edge cases & validation | `473:75` | y=3840 | (empty — future batches) |
 
 #### Batch 1 changes
@@ -148,6 +148,17 @@ The workflow stepper was extended **4 → 7 dots** to carry the new tail: Type �
 **Entry point:** Agent Catalogue `23:3` → `New agent` button (`25:30`). The workflow tail hands off to the Visual Workflow Builder (`35:34`) via W4's `Create draft & open builder` and W5's `Open in Visual Builder`.
 
 Steppers: chatbot frames show 1→7 of 7; chatbot Created shows all-7 teal (Step 7 of 7); workflow Triggers `106:333` still 4-step (pre-batch); the workflow tail W2–W5 use the extended 7-dot path (Steps=5, Budget=6, Review=7, Created=all done). All text binds Paper & Signal styles by name; machine register uses JetBrains Mono.
+
+#### Row 3 frame list (y=2680) — Chatbot branch variants ✅ batch 3 2026-05-26
+
+Four non-default branch variant frames for the chatbot wizard tail. All 1440×1024, same takeover-wizard style (top bar `Conductor · New agent` + `Exit ✕`, dots+bars stepper + `Step N of 7`, centered 720px `surface/card` content column Shadow/Card radius 12, Back/Continue footer). Fills/text bind Paper & Signal variables by name; machine register (mono identifiers, URLs) uses JetBrains Mono; state colors used only for state/semantic meaning (`state/error` for validation, amber fill+stroke for design-assumption banner).
+
+| Frame | Step | Node ID | x | Key variant |
+|---|---|---|---|---|
+| **V1** | **Routing · single specialist** — sub-mode segmented `Router / Single specialist` with **Single specialist** selected; explanatory `surface/sunken` box: "This chatbot answers directly — no sub-routing. It can be reached directly or registered as a specialist under a router." No specialist list/classifier config shown. | **`510:84`** | **0** | Step 4 of 7 |
+| **V2** | **Routing · rule-based + low-confidence** — amber design-assumption banner (⚠ "Design assumption — Rule-based routing maps to a planned strategy…"); strategy segmented `LLM classifier / Rule-based` with **Rule-based** selected; keyword→specialist rule rows (`"refund|charge" → payments`, `"login|error" → technical`, `else → knowledge`) in JetBrains Mono; low-confidence segmented `ask_clarification` (selected) / `route_to_default`; confidence threshold label "0.50" + teal slider at 50%. | **`515:84`** | **1540** | Step 4 of 7 |
+| **V3** | **Knowledge & Memory · minimal** — KB: OFF toggle + muted "Answers from the model only — no knowledge base attached."; Working memory strategy segmented `sliding / summarize / semantic` with **summarize** selected + red error banner "summarize requires a summary_agent — none selected" + required `summary_agent` select with red border; Episodic OFF (muted descriptor "requires stable user_id"); Semantic OFF (muted descriptor "requires user_profiles table"). | **`516:84`** | **3080** | Step 5 of 7 |
+| **V4** | **Safety · webhook handoff** — Standard moderation, PII toggle ON; blocked topics `legal advice` + `competitor pricing`; human handoff segmented `message / webhook / ticket` with **webhook** selected + `https://acme.app/handoff` mono URL input + helper "On non-2xx: retries 3× then falls back to a message (escalation_outcome: webhook_failed_fallback)"; Degraded message textarea shown. | **`517:84`** | **4620** | Step 6 of 7 |
 
 ### MCP creation — takeover wizard ✅ (page 266:2)
 
